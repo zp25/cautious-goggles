@@ -76,7 +76,7 @@ function tmpSass() {
         $.sass({
           includePaths: [
             'node_modules/normalize.css',
-            './',
+            'node_modules/ui',
           ],
           precision: 10,
         })
@@ -100,7 +100,7 @@ function sass() {
         $.sass({
           includePaths: [
             'node_modules/normalize.css',
-            './',
+            'node_modules/ui',
           ],
           precision: 10,
         })

@@ -1,14 +1,14 @@
 import 'babel-polyfill';
 import { dispatcher } from './lib';
 import createClickHandler from './handlers';
-
 import ui from './ui';
+
 import {
   Carousel,
   CarouselLite,
   Mask,
   Menu,
-} from '../../index';
+} from 'ui';
 
 /**
  * 首次呈现

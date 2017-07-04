@@ -17,12 +17,12 @@ const PATHS = {
     dest: 'dist',
   },
   styles: {
-    src: ['app/styles/**/*.{scss,css}', 'styles/**/*.{scss,css}'],
+    src: 'app/styles/**/*.{scss,css}',
     tmp: '.tmp/styles',
     dest: 'dist/styles',
   },
   scripts: {
-    src: ['app/scripts/**/*.js', 'src/**/*.js', 'legacy/**/*.js'],
+    src: 'app/scripts/**/*.js',
     // browserify
     entries: {
       index: 'app/scripts/index.js',
@@ -42,13 +42,10 @@ const PATHS = {
     tmp: '.tmp/images',
     dest: 'dist/images',
   },
-  templates: {
-    index: 'app/templates/index/*.hbs',
-  },
   copy: ['app/*', '!app/*.html'],
   clean: ['.tmp', 'dist/*'],
   manifest: './rev-manifest.json',
-  assets: ['.tmp', 'example', 'node_modules'],
+  assets: ['.tmp', 'app', 'node_modules'],
 };
 
 const VENDOR = ['babel-polyfill'];

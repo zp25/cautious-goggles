@@ -1,4 +1,4 @@
-import { Carousel, CarouselLite } from '../../legacy/carousel';
+import { Carousel, CarouselLite } from 'ui/legacy/carousel';
 
 /**
  * carousel自定义导航的处理函数
