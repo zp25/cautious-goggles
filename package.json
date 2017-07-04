@@ -1,11 +1,12 @@
 {
   "name": "ui",
   "version": "0.0.0",
-  "description": "UI",
+  "description": "UI example",
   "main": "index.js",
   "scripts": {
+    "start": "gulp serve",
     "copyindex": "node copyindex",
-    "start": "npm run copyindex && gulp serve",
+    "postinstall": "npm run copyindex",
     "gulp": "gulp",
     "build": "npm run copyindex && npm run gulp",
     "serve": "node server.js"
@@ -16,9 +17,10 @@
   },
   "keywords": [
     "gulp",
-    "UI"
+    "UI",
+    "example"
   ],
-  "author": "zp25",
+  "author": "zp25 <zebrap25@gmail.com>",
   "license": "MIT",
   "dependencies": {
     "autoprefixer": "^7.1.1",
@@ -84,10 +86,5 @@
   "browserslist": [
     "last 2 versions",
     "not ie < 11"
-  ],
-  "browserify": {
-    "transform": [
-      "babelify"
-    ]
-  }
+  ]
 }

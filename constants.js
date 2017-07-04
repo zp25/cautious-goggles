@@ -13,39 +13,39 @@ const HTMLMINIFIER = {
 const PATHS = {
   root: './',
   html: {
-    src: 'example/**/*.html',
+    src: 'app/**/*.html',
     dest: 'dist',
   },
   styles: {
-    src: ['example/styles/**/*.{scss,css}', 'styles/**/*.{scss,css}'],
+    src: ['app/styles/**/*.{scss,css}', 'styles/**/*.{scss,css}'],
     tmp: '.tmp/styles',
     dest: 'dist/styles',
   },
   scripts: {
-    src: ['example/scripts/**/*.js', 'src/**/*.js', 'legacy/**/*.js'],
+    src: ['app/scripts/**/*.js', 'src/**/*.js', 'legacy/**/*.js'],
     // browserify
     entries: {
-      index: 'example/scripts/index.js',
-      legacy: 'example/scripts/legacy.js',
+      index: 'app/scripts/index.js',
+      legacy: 'app/scripts/legacy.js',
     },
     // concat
     concat: [],
     // production不使用
     watch: [
-      'example/scripts/misc/dev.js',
+      'app/scripts/misc/dev.js',
     ],
     tmp: '.tmp/scripts',
     dest: 'dist/scripts',
   },
   images: {
-    src: 'example/images/**/*',
+    src: 'app/images/**/*',
     tmp: '.tmp/images',
     dest: 'dist/images',
   },
   templates: {
-    index: 'example/templates/index/*.hbs',
+    index: 'app/templates/index/*.hbs',
   },
-  copy: ['example/*', '!example/*.html'],
+  copy: ['app/*', '!app/*.html'],
   clean: ['.tmp', 'dist/*'],
   manifest: './rev-manifest.json',
   assets: ['.tmp', 'example', 'node_modules'],
