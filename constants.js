@@ -1,6 +1,8 @@
 const HTMLMINIFIER = {
   collapseWhitespace: true,
   collapseBooleanAttributes: true,
+  minifyCSS: true,
+  minifyJS: true,
   removeAttributeQuotes: true,
   removeComments: true,
   removeEmptyAttributes: true,

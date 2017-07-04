@@ -2,6 +2,7 @@ import gulp from 'gulp';
 import gulpLoadPlugins from 'gulp-load-plugins';
 import browserify from 'browserify';
 import watchify from 'watchify';
+import babelify from 'babelify';
 import source from 'vinyl-source-stream';
 import buffer from 'vinyl-buffer';
 import es from 'event-stream';
@@ -44,6 +45,7 @@ const tmpBundle = BS => (done) => {
       entries: PATHS.scripts.entries[entry],
       cache: {},
       packageCache: {},
+      transform: [babelify],
       plugin: [watchify],
       debug: true,
     });
@@ -69,6 +71,7 @@ const bundle = (done) => {
       entries: PATHS.scripts.entries[entry],
       cache: {},
       packageCache: {},
+      transform: [babelify],
     });
 
     // exclude vendor
