@@ -1,5 +1,3 @@
-import 'babel-polyfill';
-
 const createClickHandler = (components) => {
   const { mask, carousel } = components;
 

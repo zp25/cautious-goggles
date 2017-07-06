@@ -2,12 +2,10 @@
  * Mask
  */
 
-import 'babel-polyfill';
 import { templater } from '../lib';
 
 const circles = () => {
-  let arr = new Array(12);
-  arr.fill(0);
+  let arr = [...new Array(12).keys()];
   arr = arr.map((d, index) => ({
     id: index + 1,
   }));

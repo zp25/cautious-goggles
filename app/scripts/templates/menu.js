@@ -2,7 +2,6 @@
  * Menu
  */
 
-import 'babel-polyfill';
 import { templater } from '../lib';
 
 const list = param => param.reduce((prev, d) => `${prev}<li>${d.content}</li>`, '');

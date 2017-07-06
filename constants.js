@@ -50,7 +50,7 @@ const PATHS = {
   assets: ['.tmp', 'app', 'node_modules'],
 };
 
-const VENDOR = ['babel-polyfill'];
+const VENDOR = [];
 
 export {
   HTMLMINIFIER,

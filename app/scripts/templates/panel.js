@@ -2,7 +2,6 @@
  * Panel
  */
 
-import 'babel-polyfill';
 import { templater } from '../lib';
 
 export default templater `

@@ -47,6 +47,7 @@ const tmpBundle = BS => (done) => {
       packageCache: {},
       transform: [babelify],
       plugin: [watchify],
+      // apply source maps
       debug: true,
     });
 
@@ -72,6 +73,8 @@ const bundle = (done) => {
       cache: {},
       packageCache: {},
       transform: [babelify],
+      // apply source maps
+      debug: true,
     });
 
     // exclude vendor
@@ -95,8 +98,19 @@ const bundle = (done) => {
     .on('end', done);
 };
 
-const vendor = () => {
-  const b = browserify();
+const vendor = (done) => {
+  if (!VENDOR || VENDOR.length === 0) {
+    done();
+    return;
+  }
+
+  const b = browserify({
+    cache: {},
+    packageCache: {},
+    transform: [babelify],
+    // apply source maps
+    debug: true,
+  });
 
   VENDOR.forEach((lib) => {
     b.require(lib);
@@ -108,10 +122,13 @@ const vendor = () => {
     .on('error', $.util.log.bind($.util, 'Browserify Error'))
     .pipe(source('vendor.js'))
     .pipe(buffer())
-    .pipe(gulp.dest(PATHS.scripts.tmp))
-    .pipe($.uglify())
-    .pipe($.size({ title: 'vendor' }))
-    .pipe($.rev())
+    .pipe($.sourcemaps.init({ loadMaps: true }))
+      .pipe($.sourcemaps.write())
+      .pipe(gulp.dest(PATHS.scripts.tmp))
+      .pipe($.uglify())
+      .pipe($.size({ title: 'vendor' }))
+      .pipe($.rev())
+    .pipe($.sourcemaps.write('.'))
     .pipe(gulp.dest(PATHS.scripts.dest))
     .pipe($.rev.manifest({
       base: pwd,

@@ -3,8 +3,6 @@
  * @module dispatcher
  */
 
-import 'babel-polyfill';
-
 export default handlers => (e) => {
   const trigger = e.target.dataset.trigger;
 

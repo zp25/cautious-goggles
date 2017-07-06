@@ -3,8 +3,6 @@
  * @module templater
  */
 
-import 'babel-polyfill';
-
 export default (strs, ...keys) => (data) => {
   const arr = Array.isArray(data) ? data.slice() : [Object.assign({}, data)];
   const lastIndex = strs.length - 1;

@@ -1,4 +1,3 @@
-import 'babel-polyfill';
 import Template from './templates';
 
 export default () => {
