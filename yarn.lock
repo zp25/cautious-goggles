@@ -7060,10 +7060,6 @@ uglify-to-browserify@~1.0.0:
   version "1.0.2"
   resolved "http://registry.npm.taobao.org/uglify-to-browserify/download/uglify-to-browserify-1.0.2.tgz#6e0924d6bda6b5afe349e39a6d632850a0f882b7"
 
-"ui@github:zp25/ui":
-  version "0.0.1"
-  resolved "https://codeload.github.com/zp25/ui/tar.gz/21a9c2d548d6c3749ec0f22c5cdc57ee7af0a7e8"
-
 uid-number@^0.0.6:
   version "0.0.6"
   resolved "http://registry.npm.taobao.org/uid-number/download/uid-number-0.0.6.tgz#0ea10e8035e8eb5b8e4449f06da1c730663baa81"
@@ -7554,3 +7550,7 @@ yauzl@^2.2.1:
 yeast@0.1.2:
   version "0.1.2"
   resolved "http://registry.npm.taobao.org/yeast/download/yeast-0.1.2.tgz#008e06d8094320c372dbc2f8ed76a0ca6c8ac419"
+
+zp-ui@^0.0.1:
+  version "0.0.1"
+  resolved "https://registry.yarnpkg.com/zp-ui/-/zp-ui-0.0.1.tgz#b0f05c554401219ed87f7753ad7191150a919652"

@@ -1,6 +1,6 @@
 {
-  "name": "ui",
-  "version": "0.0.0",
+  "name": "zp-ui",
+  "version": "0.0.1",
   "description": "UI example",
   "main": "index.js",
   "scripts": {
@@ -13,13 +13,8 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/zp25/ui.git"
+    "url": "https://github.com/zp25/zp-ui.git"
   },
-  "keywords": [
-    "gulp",
-    "UI",
-    "example"
-  ],
   "author": "zp25 <zebrap25@gmail.com>",
   "license": "MIT",
   "dependencies": {
@@ -69,10 +64,10 @@
     "rimraf": "^2.6.1",
     "serve-favicon": "^2.4.3",
     "shortid": "^2.2.8",
-    "ui": "github:zp25/ui",
     "vinyl-buffer": "^1.0.0",
     "vinyl-source-stream": "^1.1.0",
-    "watchify": "^3.9.0"
+    "watchify": "^3.9.0",
+    "zp-ui": "^0.0.1"
   },
   "devDependencies": {
     "cz-conventional-changelog": "^2.0.0"
