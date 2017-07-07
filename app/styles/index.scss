@@ -1,8 +1,10 @@
 @import 'normalize';
 
 @import 'color.map';
-@import 'styles/global';
+
+@import 'styles/func';
 @import 'styles/root';
+@import 'styles/global';
 
 // utils
 @import 'styles/btn';
