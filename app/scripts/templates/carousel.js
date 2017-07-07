@@ -10,7 +10,7 @@ const list = (type) => {
    * 制作banner
    * @return {function}
    */
-  const main = param => param.reduce(prev => `${prev}<li class="slide-banner"></li>`, '');
+  const main = param => param.reduce(prev => `${prev}<div class="slide-banner"></div>`, '');
 
   /**
    * 制作nav
@@ -29,7 +29,7 @@ const list = (type) => {
 export default templater `
   <div class="app app--carousel">
     <div class="carousel" data-group="main">
-      <ul class="carousel__main">${list('main')}</ul>
+      <div class="carousel__main">${list('main')}</div>
       <div class="carousel__nav">${list('nav')}</div>
     </div>
 

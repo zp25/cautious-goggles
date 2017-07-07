@@ -7,9 +7,9 @@
 }
 
 // http://www.outlinenone.com/
-:focus {
-  outline: none;
-}
+// :focus {
+//   outline: none;
+// }
 
 html, button, input, textarea, select {
   padding: 0;
@@ -88,6 +88,10 @@ html {
         border-radius: 50%;
         margin-top: -20px;
         cursor: pointer;
+
+        &:focus {
+          outline: none;
+        }
 
         &.custom-nav__btn--l {
           left: 10px;

@@ -55,6 +55,10 @@
         margin-top: torem(-20px);
         cursor: pointer;
 
+        &:focus {
+          outline: none;
+        }
+
         &.custom-nav__btn--l {
           left: torem(10px);
         }
@@ -96,6 +100,7 @@
           list-style: decimal inside;
           background-color: color(white);
           padding: torem(5px) torem(10px);
+          margin: 0;
           transform: translate3d(0, 0, -999px);
         }
       }
