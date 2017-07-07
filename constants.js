@@ -22,6 +22,10 @@ const PATHS = {
     src: 'app/styles/**/*.{scss,css}',
     tmp: '.tmp/styles',
     dest: 'dist/styles',
+    includePaths: [
+      'node_modules/normalize.css',
+      'node_modules/zp-ui',
+    ],
   },
   scripts: {
     src: 'app/scripts/**/*.js',

@@ -3,7 +3,7 @@ import {
   CarouselLite,
   Mask,
   Menu,
-} from 'ui';
+} from 'zp-ui';
 
 import { dispatcher } from './lib';
 import createClickHandler from './handlers';

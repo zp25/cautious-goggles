@@ -74,10 +74,7 @@ function tmpSass() {
     .pipe($.sourcemaps.init())
       .pipe(
         $.sass({
-          includePaths: [
-            'node_modules/normalize.css',
-            'node_modules/ui',
-          ],
+          includePaths: PATHS.styles.includePaths,
           precision: 10,
         })
         .on('error', $.sass.logError)
@@ -98,10 +95,7 @@ function sass() {
     .pipe($.sourcemaps.init())
       .pipe(
         $.sass({
-          includePaths: [
-            'node_modules/normalize.css',
-            'node_modules/ui',
-          ],
+          includePaths: PATHS.styles.includePaths,
           precision: 10,
         })
         .on('error', $.sass.logError)
