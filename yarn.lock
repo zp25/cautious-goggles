@@ -7061,8 +7061,8 @@ uglify-to-browserify@~1.0.0:
   resolved "http://registry.npm.taobao.org/uglify-to-browserify/download/uglify-to-browserify-1.0.2.tgz#6e0924d6bda6b5afe349e39a6d632850a0f882b7"
 
 "ui@github:zp25/ui":
-  version "0.0.0"
-  resolved "https://codeload.github.com/zp25/ui/tar.gz/94a3e83b7655f159b2252615c1fa4d4c96d1fc45"
+  version "0.0.1"
+  resolved "https://codeload.github.com/zp25/ui/tar.gz/21a9c2d548d6c3749ec0f22c5cdc57ee7af0a7e8"
 
 uid-number@^0.0.6:
   version "0.0.6"
