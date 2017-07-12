@@ -1,5 +1,6 @@
 #app {
   @include flexbox(column, nowrap, flex-start, center);
+  font-size: fontSize();
 
   .demo {
     margin-bottom: torem(20px);

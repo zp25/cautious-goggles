@@ -2,11 +2,12 @@
 
 @import 'color.map';
 
-@import 'styles/func';
-@import 'styles/global';
+@import 'styles/legacy/func';
+@import 'styles/legacy/root';
+@import 'styles/legacy/global';
 
 // utils
-@import 'styles/carousel.legacy';
+@import 'styles/legacy/carousel';
 
 // custom
 @import 'app.legacy';

@@ -1,49 +1,6 @@
-*,
-*::before,
-*::after {
-  box-sizing: content-box;
-  // 取消点击链接高亮
-  -webkit-tap-highlight-color: transparent;
-}
-
-// http://www.outlinenone.com/
-// :focus {
-//   outline: none;
-// }
-
-html, button, input, textarea, select {
-  padding: 0;
-  margin: 0;
-  // 文本平滑属性
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
-
-a:link,
-a:hover,
-a:active,
-a:visited {
-  text-decoration: none;
-}
-
-ol, ul {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-}
-
-html {
-  height: 100%;
-
-  body {
-    height: 100%;
-    font-family: Helvetica, Tahoma, Arial, sans-serif;
-    font-size: 14px;
-    line-height: 1.5;
-  }
-}
-
 #app {
+  font-size: fontSize();
+
   .demo {
     margin-bottom: 20px;
 
