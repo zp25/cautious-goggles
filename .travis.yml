@@ -1,0 +1,14 @@
+language: node_js
+node_js:
+  - "7"
+cache: yarn
+script:
+  - npm run build
+deploy:
+  provider: heroku
+  skip_cleanup: true
+  api_key:
+    secure: 0Bcjlg4MvGStGwHXO2d9VWfBNyqh5e2zYat2MPYwnUaRvHcUowquxkD4gL+WXfL1DJ+Dkpiooke8Zr6WUZGnjU3/gHZ+B1sG0Nscu8Yaq1RMql+mIOnnG3IAkfj2Xoso0LiVM7q8om4ZtTHY1CnCahDAGCrxKo/z5LT84LdiRDGmB+dUP0Z6mYJHh10lhWsrWYmC+g0TgL+MQaGkpiHrTTVWkQFYqZ72ORINKGuu2ZHc2Kku76LreI2Mxr+507uIbyjRVtHftgYaxRZVlg4CUsOmrNdg29i8PKfW+LKTFt5//ISd73LNUAAI7fn74hNMNYCBsLFVcTPdbaoRae+l2s7Tq9eOCmKYBRoN6oVP7Tjo8P7ncyx9I4bEZFE3TzPE6y4APEJnkQB5pgh1DEs1UQG+PbbcPNhzzcHXpTglkLpUaWPqtzyjSiji7wU7nvoPS00kSLFxWFZ/qQE0pnzWfdhesjHx0tmnRXYpGoLMdm3E0F//FBoj2fi1rDR9og5nW3HT1PCG92QdoM1I7C27A9zFhxk6foGBy9YFJcesy4A7Sfj+R+D9Hy/ebc2P8Av9ua801bznxix2IaPmN9NonT+6E6fFc4WJIxz4OG65liDEQYJBkwXNlqOdIglN9bgT7i2cfYS6Ybs1uIFRXkZLCULxsS8RmwifMz2KOX1qN9Q=
+  app: rens-ui
+  on:
+    branch: example
