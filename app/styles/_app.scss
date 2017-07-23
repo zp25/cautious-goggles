@@ -1,5 +1,6 @@
 #app {
   @include flexbox(column, nowrap, flex-start, center);
+  color: color(text);
   font-size: fontSize();
 
   .demo {
@@ -49,7 +50,7 @@
         top: 50%;
         width: torem(40px);
         height: torem(40px);
-        color: color(black);
+        color: color(text);
         background-color: color(white);
         border: none;
         border-radius: 50%;
