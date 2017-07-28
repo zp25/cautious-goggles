@@ -86,14 +86,43 @@
     transform-style: preserve-3d;
 
     .menu {
-      .menu__nav {
-        &.menu__nav--active {
-          .custom-detail {
+      width: 100%;
+      @include flexbox();
+      border-bottom: 1px solid color(border);
+
+      .menu__anchor {
+        flex: 0 0 auto;
+        margin-right: torem(3px);
+        margin-bottom: -1px;
+
+        &:hover {
+          text-decoration: none;
+        }
+
+        &.menu__anchor--active {
+          .menu__item {
+            background-color: color(white);
+            border-color: color(border);
+            border-bottom-color: transparent;
+            pointer-events: none;
+          }
+
+          .menu__page {
             transform: translate3d(0, 0, 0);
           }
         }
 
-        .custom-detail {
+        .menu__item {
+          font-size: fontSize();
+          line-height: 1.5;
+          background-color: transparent;
+          border: 1px solid transparent;
+          border-radius: torem(4px) torem(4px) 0 0;
+          padding: torem(10px) torem(15px) torem(9px);
+          cursor: pointer;
+        }
+
+        .menu__page {
           position: absolute;
           top: torem(42px);
           right: 0;
