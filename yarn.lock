@@ -7624,8 +7624,8 @@ yeast@0.1.2:
   version "0.1.2"
   resolved "http://registry.npm.taobao.org/yeast/download/yeast-0.1.2.tgz#008e06d8094320c372dbc2f8ed76a0ca6c8ac419"
 
-zp-ui@^0.1.0:
-  version "0.1.0"
-  resolved "http://registry.npm.taobao.org/zp-ui/download/zp-ui-0.1.0.tgz#503e6f81b372dade44800290bcb64150c9686b31"
+zp-ui@^0.1.1:
+  version "0.1.1"
+  resolved "http://registry.npm.taobao.org/zp-ui/download/zp-ui-0.1.1.tgz#f58e8fc794fb07f427295c9ebc98ba194facb710"
   dependencies:
     babel-runtime "^6.26.0"
