@@ -8,6 +8,7 @@ import {
 import { dispatcher } from './lib';
 import createClickHandler from './handlers';
 import ui from './ui';
+import backgroundObserver from './observer';
 
 /**
  * 首次呈现
@@ -20,7 +21,6 @@ const render = () => {
   });
 };
 
-/** Events */
 document.addEventListener('DOMContentLoaded', () => {
   render();
 
@@ -29,8 +29,9 @@ document.addEventListener('DOMContentLoaded', () => {
   carousel.autoplay();
 
   // carousel lite
-  const carousellite = new CarouselLite('lite', { delay: 4000 });
-  carousellite.autoplay();
+  const carouselLite = new CarouselLite('lite', { delay: 4000 });
+  carouselLite.attach(backgroundObserver());
+  carouselLite.play();
 
   // mask
   const mask = new Mask('main');
