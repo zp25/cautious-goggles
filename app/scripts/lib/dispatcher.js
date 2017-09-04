@@ -4,7 +4,7 @@
  */
 
 export default handlers => (e) => {
-  const trigger = e.target.dataset.trigger;
+  const { trigger } = e.target.dataset;
 
   if (trigger && {}.hasOwnProperty.call(handlers, trigger)) {
     handlers[trigger](e);

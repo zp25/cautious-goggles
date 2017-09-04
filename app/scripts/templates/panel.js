@@ -4,7 +4,7 @@
 
 import { templater } from '../lib';
 
-export default templater `
+export default templater`
   <div class="app app--panel">
     <div class="panel panel--black">
       <div class="panel__head">${'title'}</div>

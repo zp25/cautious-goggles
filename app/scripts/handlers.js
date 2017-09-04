@@ -13,15 +13,13 @@ const createClickHandler = (components) => {
    * 启动loading
    */
   const loading = () => {
-    mask.loading();
+    mask.loading('Loading...');
   };
 
   /**
    * mask panel提示消息效果
    */
-  const prompt = (e) => {
-    e.preventDefault();
-
+  const prompt = () => {
     message('可填写3行提示信息');
   };
 
@@ -29,7 +27,7 @@ const createClickHandler = (components) => {
    * mask panel切换效果
    */
   const switching = () => {
-    loading();
+    loading('Loading...');
 
     setTimeout(() => {
       message('Loading结束');

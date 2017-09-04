@@ -26,7 +26,7 @@ const list = (type) => {
   };
 };
 
-export default templater `
+export default templater`
   <div class="app app--carousel">
     <div class="carousel" data-group="main">
       <div class="carousel__main">${list('main')}</div>

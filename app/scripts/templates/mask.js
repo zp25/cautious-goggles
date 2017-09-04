@@ -17,7 +17,7 @@ const circles = () => {
 
 circles.displayName = 'circles';
 
-export default templater `
+export default templater`
   <div class="app app--mask mask" data-group="main">
     <div class="mask__panel mask__panel--loading panel panel--black-reverse">
       <div class="panel__body">

@@ -8,7 +8,7 @@ const list = param => param.reduce(prev => `${prev}<div class="slide-banner"></d
 
 list.displayName = 'list';
 
-export default templater `
+export default templater`
   <div class="app app--carousel">
     <div class="carousel" data-group="lite">
       <div class="carousel__main">${list}</div>
