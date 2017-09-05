@@ -23,6 +23,7 @@ app.use(helmet({
       defaultSrc: ["'self'"],
       objectSrc: ["'none'"],
       frameAncestors: ["'none'"],
+      styleSrc: ["'self'", "'unsafe-inline'"],
     },
     browserSniff: false,
   },
