@@ -3,6 +3,11 @@
   color: color(text);
   font-size: fontSize();
 
+  .title {
+    width: 95%;
+    font-weight: normal;
+  }
+
   .demo {
     margin-bottom: torem(20px);
 

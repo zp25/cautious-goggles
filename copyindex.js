@@ -24,6 +24,13 @@ const context = {
   version: shortid.generate(),
 };
 
+const partials = [
+  {
+    file: 'github-corners.hbs',
+    name: 'GithubCorners',
+  }
+];
+
 /**
  * 注册Partial
  * @param {String} template 模版文件名称
@@ -36,15 +43,15 @@ function registerPartials(template, name) {
   Handlebars.registerPartial(name, source);
 }
 
+partials.forEach((partial) => {
+  const { file, name } = partial;
+
+  registerPartials(file, name);
+});
+
 const layout = path.resolve(__dirname, 'views', 'layouts/main.hbs');
 const source = fs.readFileSync(layout, 'utf8');
 const template = Handlebars.compile(source);
-
-// partials.forEach((partial) => {
-//   const { file, name } = partial;
-
-//   registerPartials(file, name);
-// });
 
 Object.keys(pages).forEach((page) => {
   const indexTo = `app/${page}.html`;
