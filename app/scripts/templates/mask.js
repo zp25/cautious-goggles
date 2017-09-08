@@ -26,6 +26,13 @@ export default templater`
       </div>
     </div>
 
+    <div class="mask__panel mask__panel--switching panel panel--black-reverse">
+      <div class="panel__body">
+        <div class="loading">${circles}</div>
+        <p class="message">${'loading'}</p>
+      </div>
+    </div>
+
     <div class="mask__panel mask__panel--message panel panel--black-reverse">
       <div class="panel__body">
         <p class="message">${'message'}</p>

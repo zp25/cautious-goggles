@@ -8,7 +8,10 @@ import {
 import { dispatcher } from './lib';
 import createClickHandler from './handlers';
 import ui from './ui';
-import backgroundObserver from './observer';
+import {
+  backgroundObserver,
+  panelSwitchingObserver,
+} from './observer';
 
 /**
  * 首次呈现
@@ -35,6 +38,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // mask
   const mask = new Mask('main');
+  mask.attach(panelSwitchingObserver());
   mask.hide();
 
   // menu

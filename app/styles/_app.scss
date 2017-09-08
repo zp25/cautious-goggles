@@ -78,10 +78,15 @@
 
   &.app--mask {
     .close {
+      display: none;
       position: absolute;
       top: torem(20px);
       right: torem(20px);
       text-decoration: none;
+
+      &.close--active {
+        display: block;
+      }
     }
   }
 

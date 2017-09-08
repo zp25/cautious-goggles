@@ -27,7 +27,7 @@ const createClickHandler = (components) => {
    * mask panel切换效果
    */
   const switching = () => {
-    loading('Loading...');
+    mask.prompt('switching', '请等待2s...');
 
     setTimeout(() => {
       message('Loading结束');
