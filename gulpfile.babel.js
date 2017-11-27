@@ -18,50 +18,52 @@ const $ = gulpLoadPlugins({
 });
 const BS = browserSync.create();
 
-// Lint JavaScript
-function lint() {
-  return gulp.src(PATHS.scripts.src)
-    .pipe($.eslint())
-    .pipe($.eslint.format())
-    .pipe($.if(!BS.active, $.eslint.failOnError()))
-}
+// Lint
+const lint = () => gulp.src(PATHS.scripts.src)
+  .pipe($.eslint())
+  .pipe($.eslint.format())
+  .pipe($.if(!BS.active, $.eslint.failOnError()));
+
+const stylelint = () => gulp.src(PATHS.styles.src)
+  .pipe($.stylelint({
+    failAfterError: false,
+    reporters: [
+      {
+        formatter: 'verbose',
+        console: true,
+      },
+    ],
+    syntax: 'scss',
+  }));
 
 // Image Optimazation
 const makeHashKey = entry => file => [file.contents.toString('utf8'), entry].join('');
 
-function images() {
-  return gulp.src(PATHS.images.src)
-    .pipe($.cache($.imagemin({
-      progressive: true,
-      interlaced: true,
-      multipass: true,
-    }), {
-      key: makeHashKey('images'),
-    }))
-    .pipe(gulp.dest(PATHS.images.dest))
-    .pipe($.size({ title: 'images' }));
-}
+const images = () => gulp.src(PATHS.images.src)
+  .pipe($.cache($.imagemin({
+    progressive: true,
+    interlaced: true,
+    multipass: true,
+  }), {
+    key: makeHashKey('images'),
+  }))
+  .pipe(gulp.dest(PATHS.images.dest))
+  .pipe($.size({ title: 'images' }));
 
-function tmpWebp() {
-  return gulp.src(PATHS.images.src)
-    .pipe($.cache($.webp({ quality: 75 }), { key: makeHashKey('webp') }))
-    .pipe(gulp.dest(PATHS.images.tmp))
-    .pipe(BS.stream({ once: true }));
-}
+const tmpWebp = () => gulp.src(PATHS.images.src)
+  .pipe($.cache($.webp({ quality: 75 }), { key: makeHashKey('webp') }))
+  .pipe(gulp.dest(PATHS.images.tmp))
+  .pipe(BS.stream({ once: true }));
 
-function webp() {
-  return gulp.src(PATHS.images.src)
-    .pipe($.cache($.webp({ quality: 75 }), { key: makeHashKey('webp') }))
-    .pipe(gulp.dest(PATHS.images.dest))
-    .pipe($.size({ title: 'webp' }));
-}
+const webp = () => gulp.src(PATHS.images.src)
+  .pipe($.cache($.webp({ quality: 75 }), { key: makeHashKey('webp') }))
+  .pipe(gulp.dest(PATHS.images.dest))
+  .pipe($.size({ title: 'webp' }));
 
 // Copy
-function copy() {
-  return gulp.src(PATHS.copy)
-    .pipe(gulp.dest('dist'))
-    .pipe($.size({ title: 'copy' }));
-}
+const copy = () => gulp.src(PATHS.copy)
+  .pipe(gulp.dest('dist'))
+  .pipe($.size({ title: 'copy' }));
 
 // Styles
 function tmpSass() {
@@ -120,6 +122,10 @@ const html = () => gulp.src(PATHS.html.src)
   .pipe($.replace({
     manifest: gulp.src(PATHS.manifest),
   }))
+  .pipe($.inlineSource({
+    rootpath: PATHS.html.dest,
+    compress: false,
+  }))
   .pipe($.if('*.html', $.htmlmin(HTMLMINIFIER)))
   .pipe($.if('*.html', $.size({ title: 'html', showFiles: true })))
   .pipe(gulp.dest(PATHS.html.dest));
@@ -136,7 +142,7 @@ function serve() {
   });
 
   gulp.watch(PATHS.html.src).on('change', BS.reload);
-  gulp.watch(PATHS.styles.src, tmpSass);
+  gulp.watch(PATHS.styles.src, gulp.parallel(stylelint, tmpSass));
   gulp.watch(PATHS.images.src, tmpWebp);
 
   gulp.watch(PATHS.scripts.src, lint);
@@ -155,13 +161,13 @@ gulp.task('script', gulp.parallel(bundle, concat));
 gulp.task(vendor);
 
 gulp.task('clean:all', gulp.series(clean, vendor));
-gulp.task('clean:cache', cb => $.cache.clearAll(cb));
+gulp.task('clean:cache', done => $.cache.clearAll(done));
 
 // Build production files, the default task
 gulp.task('default',
   gulp.series(
     'clean:all', lint,
-    gulp.parallel('script', sass, images, webp, copy),
+    gulp.parallel('script', stylelint, sass, images, webp, copy),
     html,
   )
 );
