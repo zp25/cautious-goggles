@@ -4,12 +4,17 @@ import autoprefixer from 'autoprefixer';
 import cssnano from 'cssnano';
 import browserSync from 'browser-sync';
 import gulpLoadPlugins from 'gulp-load-plugins';
+import named from 'vinyl-named';
+import webpack from 'webpack';
+import gulpWebpack from 'webpack-stream';
+import through2 from 'through2';
 import {
   HTMLMINIFIER,
   PATHS,
 } from './constants';
-import { tmpConcat, concat } from './gulpfile.concat.babel';
-import { tmpBundle, bundle, vendor } from './gulpfile.bundle.babel';
+
+import tmpWebpackConfig from './webpack.config';
+import webpackConfig from './webpack.production.config';
 
 const $ = gulpLoadPlugins({
   rename: {
@@ -114,6 +119,36 @@ function sass() {
     .pipe(gulp.dest(PATHS.root));
 }
 
+// Scripts
+const tmpScript = () => gulp.src(PATHS.scripts.src)
+  .pipe(named())
+  .pipe(gulpWebpack(tmpWebpackConfig, webpack))
+  .pipe(gulp.dest(PATHS.scripts.tmp))
+  .pipe(BS.stream({ once: true }));
+
+const script = () => gulp.src(PATHS.scripts.src)
+  .pipe(named())
+  .pipe(gulpWebpack(webpackConfig, webpack))
+  // @link https://github.com/shama/webpack-stream/blob/master/readme.md
+  .pipe($.sourcemaps.init({ loadMaps: true }))
+    .pipe(through2.obj(function (file, enc, next) {
+      // Dont pipe through any source map files as it will be handled by gulp-sourcemaps
+      if (!/\.map$/.test(file.path)) {
+        this.push(file);
+      }
+
+      next();
+    }))
+    .pipe($.size({ title: 'scripts', showFiles: true }))
+    .pipe($.rev())
+  .pipe($.sourcemaps.write('.'))
+  .pipe(gulp.dest(PATHS.scripts.dest))
+  .pipe($.rev.manifest({
+    base: process.cwd(),
+    merge: true,
+  }))
+  .pipe(gulp.dest(PATHS.root));
+
 // HTML
 const html = () => gulp.src(PATHS.html.src)
   .pipe($.useref({
@@ -145,9 +180,7 @@ function serve() {
   gulp.watch(PATHS.styles.src, gulp.parallel(stylelint, tmpSass));
   gulp.watch(PATHS.images.src, tmpWebp);
 
-  gulp.watch(PATHS.scripts.src, lint);
-  gulp.watch(PATHS.scripts.concat, tmpConcat(BS));
-  gulp.watch(PATHS.scripts.watch).on('change', BS.reload);
+  gulp.watch(PATHS.scripts.src, gulp.series(lint, tmpScript));
 }
 
 // Clean output directory
@@ -156,18 +189,14 @@ function clean(done) {
 }
 
 // Tasks
-gulp.task('tmpScript', gulp.parallel(tmpBundle(BS), tmpConcat(BS)));
-gulp.task('script', gulp.parallel(bundle, concat));
-gulp.task(vendor);
-
-gulp.task('clean:all', gulp.series(clean, vendor));
+gulp.task('clean:all', clean);
 gulp.task('clean:cache', done => $.cache.clearAll(done));
 
 // Build production files, the default task
 gulp.task('default',
   gulp.series(
     'clean:all', lint,
-    gulp.parallel('script', stylelint, sass, images, webp, copy),
+    gulp.parallel(script, stylelint, sass, images, webp, copy),
     html,
   )
 );
@@ -175,7 +204,7 @@ gulp.task('default',
 // run scripts, sass first and run browserSync before watch
 gulp.task('serve',
   gulp.series(
-    gulp.parallel('tmpScript', tmpSass, tmpWebp),
-    serve
+    gulp.parallel(tmpScript, tmpSass, tmpWebp),
+    serve,
   )
 );

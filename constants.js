@@ -1,3 +1,7 @@
+import path from 'path';
+
+const CONTEXT = path.resolve(__dirname, 'app/scripts');
+
 const HTMLMINIFIER = {
   collapseWhitespace: true,
   collapseBooleanAttributes: true,
@@ -22,6 +26,7 @@ const PATHS = {
     src: 'app/styles/**/*.{scss,css}',
     tmp: '.tmp/styles',
     dest: 'dist/styles',
+    // gulp-sass includePaths
     includePaths: [
       'node_modules/normalize.css',
       'node_modules/zp-ui',
@@ -29,17 +34,12 @@ const PATHS = {
   },
   scripts: {
     src: 'app/scripts/**/*.js',
-    // browserify
-    entries: {
-      index: 'app/scripts/index.js',
-      legacy: 'app/scripts/legacy.js',
+    // webpack
+    context: CONTEXT,
+    entry: {
+      index: 'index.js',
+      legacy: 'legacy.js',
     },
-    // concat
-    concat: [],
-    // production不使用
-    watch: [
-      'app/scripts/misc/dev.js',
-    ],
     tmp: '.tmp/scripts',
     dest: 'dist/scripts',
   },
@@ -54,10 +54,7 @@ const PATHS = {
   assets: ['.tmp', 'app', 'node_modules'],
 };
 
-const VENDOR = [];
-
 export {
   HTMLMINIFIER,
   PATHS,
-  VENDOR,
 };
