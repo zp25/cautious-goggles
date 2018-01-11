@@ -2,7 +2,7 @@
  * Mask
  */
 
-import { templater } from '../lib';
+import { templater } from 'zp-lib';
 
 const circles = () => {
   let arr = [...new Array(12).keys()];

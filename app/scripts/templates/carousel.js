@@ -3,7 +3,7 @@
  * 可自定义前后导航，Carousel.play(reverse)方法提供反向播放功能，但自动播放只能正向播放
  */
 
-import { templater } from '../lib';
+import { templater } from 'zp-lib';
 
 const list = (type) => {
   /**

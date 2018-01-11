@@ -1,4 +1,7 @@
-import { Carousel, CarouselLite } from 'zp-ui/dist/legacy.cjs';
+import {
+  Carousel,
+  CarouselLite,
+} from 'zp-ui/dist/legacy.cjs';
 
 /**
  * carousel自定义导航的处理函数

@@ -2,7 +2,7 @@
  * Menu
  */
 
-import { templater } from '../lib';
+import { templater } from 'zp-lib';
 
 const list = param => param.reduce((prev, d) => `${prev}<li>${d.content}</li>`, '');
 

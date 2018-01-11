@@ -1,12 +1,11 @@
-import 'babel-polyfill';
 import {
   Carousel,
   CarouselLite,
   Mask,
   Menu,
 } from 'zp-ui';
+import { dispatch } from 'zp-lib';
 
-import { dispatcher } from './lib';
 import createClickHandler from './handlers';
 import ui from './ui';
 import {
@@ -48,5 +47,5 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // event listener
   const handler = createClickHandler({ mask, carousel });
-  document.body.addEventListener('click', dispatcher(handler), false);
+  document.body.addEventListener('click', dispatch(handler), false);
 }, false);

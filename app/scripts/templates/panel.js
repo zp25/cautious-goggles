@@ -2,7 +2,7 @@
  * Panel
  */
 
-import { templater } from '../lib';
+import { templater } from 'zp-lib';
 
 export default templater`
   <div class="app app--panel">

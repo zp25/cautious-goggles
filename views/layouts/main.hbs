@@ -22,17 +22,16 @@
 
   {{> GithubCorners}}
 
-  <!-- build:remove -->
-  <script src="scripts/misc/dev.js"></script>
-  <!-- endbuild -->
   {{#if legacy}}
   <!-- build:js scripts/jquery.min.js -->
   <script src="jquery/dist/jquery.min.js"></script>
   <!-- endbuild -->
   {{/if}}
-  {{#if vendor}}
-  <script src="scripts/vendor.js"></script>
+
+  {{#if inlineScript}}
+  <script src="scripts/{{page}}.js" inline></script>
+  {{else}}
+  <script src="scripts/{{page}}.js"></script>
   {{/if}}
-  <script src="scripts/bundle.{{page}}.js"></script>
 </body>
 </html>

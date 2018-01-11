@@ -2,7 +2,7 @@
  * Carousel精简版
  */
 
-import { templater } from '../lib';
+import { templater } from 'zp-lib';
 
 const list = param => param.reduce(prev => `${prev}<div class="slide-banner"></div>`, '');
 
