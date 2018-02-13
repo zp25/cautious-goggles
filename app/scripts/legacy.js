@@ -23,7 +23,7 @@ const handler = carousel => (e) => {
 
   if (trigger === 'customNav') {
     customNav(e, carousel);
-  } else if (trigger === 'pass') {
+  } else if (trigger === 'prevent') {
     e.preventDefault();
   }
 };

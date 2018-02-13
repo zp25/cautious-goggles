@@ -1,5 +1,44 @@
+const createHandler = ({ imageLoader }) => {
+  // scroller节拍器，避免频繁操作
+  let timer = NaN;
+
+  const scroller = () => {
+    timer = timer || setTimeout(() => {
+      timer = NaN;
+
+      requestAnimationFrame(() => {
+        imageLoader.lazyload().then((data) => {
+          const errSrc = data.filter(d => d.error).map(d => d.src);
+
+          if (errSrc.length > 0) {
+            console.log(`图片加载失败: ${errSrc.join(', ')}`);
+          }
+        });
+      });
+    }, 300);
+  };
+
+  return {
+    scroller,
+  };
+};
+
 const createClickHandler = (components) => {
-  const { mask, carousel } = components;
+  const {
+    carousel,
+    mask,
+    menu,
+  } = components;
+
+  /**
+   * 轮播自定义导航
+   */
+  const customNav = (e) => {
+    e.preventDefault();
+
+    const reverse = e.target.dataset.reverse === 'true';
+    carousel.play(reverse);
+  };
 
   /**
    * mask panel显示提示消息
@@ -13,25 +52,25 @@ const createClickHandler = (components) => {
    * 启动loading
    */
   const loading = () => {
-    mask.loading('Loading...');
+    mask.loading();
   };
 
   /**
    * mask panel提示消息效果
    */
   const prompt = () => {
-    message('可填写3行提示信息');
+    message('可填写3行提示信息，每行6字');
   };
 
   /**
    * mask panel切换效果
    */
   const switching = () => {
-    mask.prompt('switching', '请等待2s...');
+    mask.loading();
 
     setTimeout(() => {
       message('Loading结束');
-    }, 2000);
+    }, 1500);
   };
 
   /**
@@ -44,30 +83,35 @@ const createClickHandler = (components) => {
   };
 
   /**
-   * 轮播自定义导航
+   * 切换list
    */
-  const customNav = (e) => {
-    e.preventDefault();
+  const switchList = (e) => {
+    const { page } = e.target.dataset;
 
-    const reverse = e.target.dataset.reverse === 'true';
-    carousel.play(reverse);
+    if (menu.page !== page) {
+      menu.open(page);
+    }
   };
 
   /**
    * 取消默认动作
    */
-  const pass = (e) => {
+  const prevent = (e) => {
     e.preventDefault();
   };
 
   return {
+    customNav,
     loading,
     prompt,
     switching,
     close,
-    customNav,
-    pass,
+    switchList,
+    prevent,
   };
 };
 
-export default createClickHandler;
+export {
+  createHandler,
+  createClickHandler,
+};

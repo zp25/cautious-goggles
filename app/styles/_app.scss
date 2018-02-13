@@ -22,13 +22,28 @@
       height: torem(320px);
     }
 
-    &.demo--panel {
+    &.demo--panel,
+    &.demo--image-loader {
       width: 85%;
     }
 
     &.demo--menu {
       width: 85%;
       height: torem(100px);
+    }
+
+    &.demo--mask {
+      .close {
+        display: none;
+        position: absolute;
+        top: torem(20px);
+        right: torem(20px);
+        text-decoration: none;
+
+        &.close--active {
+          display: block;
+        }
+      }
     }
   }
 }
@@ -41,7 +56,7 @@
     width: 100%;
     height: 100%;
 
-    // 设置banner数量
+    // 设置banner
     .slide-banner {
       &:nth-child(1) {
         background-color: color(blue);
@@ -84,20 +99,6 @@
     }
   }
 
-  &.app--mask {
-    .close {
-      display: none;
-      position: absolute;
-      top: torem(20px);
-      right: torem(20px);
-      text-decoration: none;
-
-      &.close--active {
-        display: block;
-      }
-    }
-  }
-
   &.app--menu {
     position: relative;
     height: 100%;
@@ -113,6 +114,7 @@
         flex: 0 0 auto;
         margin-right: torem(3px);
         margin-bottom: -1px;
+        cursor: pointer;
 
         &:hover {
           text-decoration: none;
@@ -125,7 +127,7 @@
           border: 1px solid transparent;
           border-radius: torem(4px) torem(4px) 0 0;
           padding: torem(10px) torem(15px) torem(9px);
-          cursor: pointer;
+          pointer-events: none;
         }
 
         .menu__page {
@@ -143,16 +145,32 @@
         }
 
         &.menu__anchor--active {
+          cursor: default;
+
           .menu__item {
             background-color: color(white);
             border-color: color(border);
             border-bottom-color: transparent;
-            pointer-events: none;
           }
 
           .menu__page {
             transform: translate3d(0, 0, 0);
           }
+        }
+      }
+    }
+  }
+
+  &.app--loaders {
+    @include flexbox(row, wrap, center, flex-start);
+
+    .image-loader {
+      width: 100%;
+      margin: 0 torem(5px) torem(5px);
+
+      @media only screen and (min-width: 405px) {
+        & {
+          width: 405px;
         }
       }
     }

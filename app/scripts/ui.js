@@ -43,7 +43,6 @@ export default () => {
 
   const mask = () => {
     const result = Template.mask({
-      loading: '填写提示信息',
       message: '填写提示信息',
     });
 
@@ -83,11 +82,38 @@ export default () => {
     $('.demo--menu').insertAdjacentHTML('afterbegin', result);
   };
 
+  /**
+   * Progressive Image Loader
+   */
+  const imageLoader = () => {
+    const loaders = [
+      {
+        id: 1,
+        src: 'images/mf.jpg',
+        preview: 'images/mf_preview.jpg',
+        alt: 'Lego Millennium Falcon',
+        ratio: (346 / 600).toPrecision(10),
+      },
+      {
+        id: 2,
+        src: 'error.png',
+        preview: 'images/mf_preview.jpg',
+        alt: 'Lego Millennium Falcon',
+        ratio: (346 / 600).toPrecision(10),
+      },
+    ];
+
+    const result = Template.imageLoader({ loaders });
+
+    $('.demo--image-loader').insertAdjacentHTML('afterbegin', result);
+  };
+
   return {
     carousel,
     carouselLite,
     panel,
     mask,
     menu,
+    imageLoader,
   };
 };

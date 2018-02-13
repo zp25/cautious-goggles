@@ -4,32 +4,21 @@
 
 import { templater } from 'zp-lib';
 
-const circles = () => {
-  let arr = [...new Array(12).keys()];
-  arr = arr.map((d, index) => ({
-    id: index + 1,
-  }));
+const loading = () => {
+  const arr = [...new Array(12).keys()].map(d => d + 1);
 
-  return arr.reduce((prev, d) => (
-    `${prev}<span class="loading__circle loading__circle--${d.id + 1}"></span>`
+  const circles = arr.reduce((prev, d) => (
+    `${prev}<span class="loading__circle loading__circle--${d}"></span>`
   ), '');
+
+  return `<div class="loading">${circles}</div>`;
 };
 
-circles.displayName = 'circles';
-
 export default templater`
-  <div class="app app--mask mask" data-group="main">
+  <div class="mask" data-group="main">
     <div class="mask__panel mask__panel--loading panel panel--black-reverse">
       <div class="panel__body">
-        <div class="loading">${circles}</div>
-        <p class="message">${'loading'}</p>
-      </div>
-    </div>
-
-    <div class="mask__panel mask__panel--switching panel panel--black-reverse">
-      <div class="panel__body">
-        <div class="loading">${circles}</div>
-        <p class="message">${'loading'}</p>
+        ${loading()}
       </div>
     </div>
 
