@@ -9,6 +9,7 @@ const ms = require('ms');
 const app = express();
 
 const static = path.resolve(__dirname, 'dist');
+const images = path.resolve(static, 'images');
 
 app.set('port', process.env.PORT || 3001);
 app.set('favicon', path.resolve(static, 'images/favicon.png'));
@@ -41,7 +42,22 @@ app.use(helmet({
 app.use(compression());
 app.use(favicon(app.get('favicon')));
 
-app.use(express.static(static, { maxAge: ms('1w') }));
+// static assets
+app.use('/images', express.static(images, { maxAge: ms('1y') }));
+app.use(express.static(static, {
+  index: false,
+  maxAge: ms('0.5y'),
+}));
+app.use(express.static(static, {
+  setHeaders: (res) => {
+    res.set('Cache-Control', 'no-cache');
+  },
+}));
+
+// 404
+app.use((req, res) => {
+  res.status(404).send('Page not Found');
+});
 
 if (app.get('env') === 'development') {
   console.log('Development mode');
