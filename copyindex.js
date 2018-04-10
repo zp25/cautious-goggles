@@ -53,7 +53,7 @@ const source = fs.readFileSync(layout, 'utf8');
 const template = Handlebars.compile(source);
 
 Object.keys(pages).forEach((page) => {
-  const indexTo = `app/${page}.html`;
+  const indexTo = path.resolve(process.env.CONTEXT || 'app', `${page}.html`);
   const { file, data } = pages[page];
 
   // Page

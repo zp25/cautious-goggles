@@ -1,7 +1,5 @@
 import path from 'path';
 
-const CONTEXT = path.resolve(__dirname, 'app/scripts');
-
 const HTMLMINIFIER = {
   collapseWhitespace: true,
   collapseBooleanAttributes: true,
@@ -16,14 +14,17 @@ const HTMLMINIFIER = {
   removeStyleLinkTypeAttributes: true,
 };
 
+const CONTEXT = path.resolve(__dirname, process.env.CONTEXT || 'app');
+
 const PATHS = {
+  // manifest
   root: './',
   html: {
-    src: 'app/**/*.html',
+    src: `${CONTEXT}/**/*.html`,
     dest: 'dist',
   },
   styles: {
-    src: 'app/styles/**/*.{scss,css}',
+    src: `${CONTEXT}/styles/**/*.{scss,css}`,
     tmp: '.tmp/styles',
     dest: 'dist/styles',
     // gulp-sass includePaths
@@ -33,9 +34,9 @@ const PATHS = {
     ],
   },
   scripts: {
-    src: 'app/scripts/**/*.js',
+    src: `${CONTEXT}/scripts/**/*.js`,
     // webpack
-    context: CONTEXT,
+    context: path.resolve(CONTEXT, 'scripts'),
     entry: {
       index: 'index.js',
       legacy: 'legacy.js',
@@ -44,17 +45,18 @@ const PATHS = {
     dest: 'dist/scripts',
   },
   images: {
-    src: 'app/images/**/*',
+    src: `${CONTEXT}/images/**/*`,
     tmp: '.tmp/images',
     dest: 'dist/images',
   },
-  copy: ['app/*', '!app/*.html'],
+  copy: [`${CONTEXT}/*`, `!${CONTEXT}/*.html`],
   clean: ['.tmp', 'dist/*'],
   manifest: './rev-manifest.json',
-  assets: ['.tmp', 'app', 'node_modules'],
+  assets: ['.tmp', CONTEXT, 'node_modules'],
 };
 
 export {
   HTMLMINIFIER,
+  CONTEXT,
   PATHS,
 };
