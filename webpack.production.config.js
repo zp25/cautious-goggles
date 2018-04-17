@@ -1,4 +1,5 @@
 import path from 'path';
+import { BundleAnalyzerPlugin } from 'webpack-bundle-analyzer';
 import { PATHS } from './constants';
 
 const {
@@ -6,10 +7,15 @@ const {
   entry,
 } = PATHS.scripts;
 
+const plugins = process.env.BUILD_ENV === 'debug' ? [
+  new BundleAnalyzerPlugin({
+    analyzerPort: process.env.PROD_PORT || 3001,
+  }),
+] : [];
+
 export default {
   target: 'web',
   mode: 'production',
-  devtool: 'inline-source-map',
   context,
   entry,
   output: {
@@ -28,4 +34,5 @@ export default {
       },
     ],
   },
+  plugins,
 };
