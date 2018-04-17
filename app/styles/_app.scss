@@ -28,8 +28,10 @@
     }
 
     &.demo--menu {
+      position: relative;
       width: 85%;
       height: torem(100px);
+      transform-style: preserve-3d;
     }
 
     &.demo--mask {
@@ -79,7 +81,7 @@
         height: torem(40px);
         color: color(text);
         background-color: color(white);
-        border: none;
+        border: 0;
         border-radius: 50%;
         margin-top: torem(-20px);
         cursor: pointer;
@@ -100,11 +102,7 @@
   }
 
   &.app--menu {
-    position: relative;
-    height: 100%;
-    transform-style: preserve-3d;
-
-    .menu {
+    &.menu {
       @include flexbox();
 
       width: 100%;
@@ -167,11 +165,11 @@
     .image-loader {
       width: 100%;
       margin: 0 torem(5px) torem(5px);
+    }
 
-      @media only screen and (min-width: 405px) {
-        & {
-          width: 405px;
-        }
+    @media only screen and (min-width: 405px) {
+      .image-loader {
+        width: 405px;
       }
     }
   }
