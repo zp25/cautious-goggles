@@ -26,7 +26,7 @@ const createHandler = ({ imageLoader }) => {
 const createClickHandler = (components) => {
   const {
     carousel,
-    mask,
+    modal,
     menu,
   } = components;
 
@@ -41,32 +41,32 @@ const createClickHandler = (components) => {
   };
 
   /**
-   * mask panel显示提示消息
+   * modal dialog显示提示消息
    * @param {string} [msg='prompt'] - 提示消息
    */
   const message = (msg) => {
-    mask.prompt('message', msg);
+    modal.prompt('message', msg);
   };
 
   /**
    * 启动loading
    */
   const loading = () => {
-    mask.loading();
+    modal.loading();
   };
 
   /**
-   * mask panel提示消息效果
+   * modal dialog提示消息效果
    */
   const prompt = () => {
     message('可填写3行提示信息，每行6字');
   };
 
   /**
-   * mask panel切换效果
+   * modal dialog切换效果
    */
   const switching = () => {
-    mask.loading();
+    modal.loading();
 
     setTimeout(() => {
       message('Loading结束');
@@ -74,12 +74,12 @@ const createClickHandler = (components) => {
   };
 
   /**
-   * 关闭mask
+   * 关闭modal
    */
   const close = (e) => {
     e.preventDefault();
 
-    mask.hide();
+    modal.close();
   };
 
   /**

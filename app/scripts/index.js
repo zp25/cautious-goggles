@@ -2,7 +2,7 @@ import {
   Carousel,
   CarouselLite,
   ImageLoader,
-  Mask,
+  Modal,
   Menu,
 } from 'zp-ui';
 import { dispatch } from 'zp-lib';
@@ -15,7 +15,7 @@ import ui from './ui';
 import {
   backgroundObserver,
   counterObserver,
-  panelSwitchingObserver,
+  dialogSwitchingObserver,
 } from './observers';
 
 /**
@@ -51,19 +51,21 @@ document.addEventListener('DOMContentLoaded', () => {
   const imageLoader = new ImageLoader();
 
   // mask
-  const mask = new Mask('main');
-  mask.attach(panelSwitchingObserver());
-  mask.hide();
+  const modal = new Modal('main');
+  modal.attach(dialogSwitchingObserver());
+  modal.close();
 
   // menu
   const menu = new Menu('main');
   menu.open(2, true);
 
   // event listener
-  const clickHandler = createClickHandler({ carousel, mask, menu });
+  const clickHandler = createClickHandler({ carousel, modal, menu });
   document.body.addEventListener('click', dispatch(clickHandler), false);
 
   const handler = createHandler({ imageLoader });
   window.addEventListener('scroll', handler.scroller, false);
   window.addEventListener('resize', handler.scroller, false);
+
+  // carouselLite.main
 }, false);

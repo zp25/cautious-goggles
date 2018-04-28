@@ -1,5 +1,5 @@
 /**
- * Mask
+ * Modal
  */
 
 import { templater } from 'zp-lib';
@@ -15,17 +15,13 @@ const loading = () => {
 };
 
 export default templater`
-  <div class="mask" data-group="main">
-    <div class="mask__panel mask__panel--loading panel panel--black-reverse">
-      <div class="panel__body">
-        ${loading()}
-      </div>
+  <div class="modal modal--mask" data-group="main">
+    <div class="modal__dialog modal__dialog--loading">
+      ${loading()}
     </div>
 
-    <div class="mask__panel mask__panel--message panel panel--black-reverse">
-      <div class="panel__body">
-        <p class="message">${'message'}</p>
-      </div>
+    <div class="modal__dialog modal__dialog--message">
+      <p class="message">${'message'}</p>
     </div>
 
     <!-- 自定义关闭按钮 -->

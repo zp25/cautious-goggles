@@ -27,7 +27,11 @@ const partials = [
   {
     file: 'github-corners.hbs',
     name: 'GithubCorners',
-  }
+  },
+  {
+    file: 'modal.hbs',
+    name: 'Modal',
+  },
 ];
 
 /**

@@ -41,14 +41,6 @@ export default () => {
     $('.demo--panel').insertAdjacentHTML('afterbegin', result);
   };
 
-  const mask = () => {
-    const result = Template.mask({
-      message: '填写提示信息',
-    });
-
-    $('.demo--mask').insertAdjacentHTML('afterbegin', result);
-  };
-
   const menu = () => {
     const result = Template.menu({
       page: [
@@ -112,7 +104,6 @@ export default () => {
     carousel,
     carouselLite,
     panel,
-    mask,
     menu,
     imageLoader,
   };

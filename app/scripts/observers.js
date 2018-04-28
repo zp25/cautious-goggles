@@ -30,13 +30,13 @@ const counterObserver = (detach) => {
 };
 
 /**
- * panel切换观察者，用于控制关闭按钮的显示
+ * modal dialog切换观察者，用于控制关闭按钮的显示
  */
-const panelSwitchingObserver = () => ({
+const dialogSwitchingObserver = () => ({
   update: (state) => {
     const { hidden, panel } = state;
 
-    const closeBtn = document.querySelector('.demo--mask .close');
+    const closeBtn = document.querySelector('.modal .close');
     const activeName = 'close--active';
 
     if (panel === 'switching' || hidden) {
@@ -50,5 +50,5 @@ const panelSwitchingObserver = () => ({
 export {
   backgroundObserver,
   counterObserver,
-  panelSwitchingObserver,
+  dialogSwitchingObserver,
 };

@@ -24,6 +24,10 @@
 
   {{> GithubCorners}}
 
+  {{#unless legacy}}
+    {{> Modal}}
+  {{/unless}}
+
   {{#if legacy}}
   <!-- build:js scripts/jquery.min.js -->
   <script src="jquery/dist/jquery.min.js"></script>
