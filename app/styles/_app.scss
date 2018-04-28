@@ -1,7 +1,16 @@
+:root {
+  --lightgrey: #f5f5f5;
+  --red: #fd6c6c;
+  --green: #64ceaa;
+  --blue: #70b7fd;
+  --text: #222;
+  --border: #ccc;
+}
+
 #app {
   @include flexbox(column, nowrap, flex-start, center);
 
-  color: color(text);
+  color: var(--text);
   font-size: fontSize();
 
   .title {
@@ -12,11 +21,7 @@
   .demo {
     margin-bottom: torem(20px);
 
-    &.demo--carousel {
-      width: 100%;
-      height: torem(320px);
-    }
-
+    &.demo--carousel,
     &.demo--carousel-lite {
       width: 100%;
       height: torem(320px);
@@ -33,20 +38,6 @@
       height: torem(100px);
       transform-style: preserve-3d;
     }
-
-    &.demo--mask {
-      .close {
-        display: none;
-        position: absolute;
-        top: torem(20px);
-        right: torem(20px);
-        text-decoration: none;
-
-        &.close--active {
-          display: block;
-        }
-      }
-    }
   }
 }
 
@@ -61,15 +52,15 @@
     // 设置banner
     .slide-banner {
       &:nth-child(1) {
-        background-color: color(blue);
+        background-color: var(--blue);
       }
 
       &:nth-child(2) {
-        background-color: color(green);
+        background-color: var(--green);
       }
 
       &:nth-child(3) {
-        background-color: color(red);
+        background-color: var(--red);
       }
     }
 
@@ -79,8 +70,8 @@
         top: 50%;
         width: torem(40px);
         height: torem(40px);
-        color: color(text);
-        background-color: color(white);
+        color: var(--text);
+        background-color: var(--white, #fff);
         border: 0;
         border-radius: 50%;
         margin-top: torem(-20px);
@@ -101,12 +92,20 @@
     }
   }
 
+  &.app--btns {
+    @include flexbox(row, wrap, flex-start, flex-start, flex-start);
+
+    .btn {
+      margin: torem(5px);
+    }
+  }
+
   &.app--menu {
     &.menu {
       @include flexbox();
 
       width: 100%;
-      border-bottom: 1px solid color(border);
+      border-bottom: 1px solid var(--border);
 
       .menu__anchor {
         flex: 0 0 auto;
@@ -136,7 +135,7 @@
           left: 0;
           line-height: torem(24px);
           list-style: decimal inside;
-          background-color: color(white);
+          background-color: var(--white, #fff);
           padding: torem(5px) torem(10px);
           margin: 0;
           transform: translate3d(0, 0, -999px);
@@ -146,8 +145,8 @@
           cursor: default;
 
           .menu__item {
-            background-color: color(white);
-            border-color: color(border);
+            background-color: var(--white, #fff);
+            border-color: var(--border);
             border-bottom-color: transparent;
           }
 
@@ -171,6 +170,20 @@
       .image-loader {
         width: 405px;
       }
+    }
+  }
+}
+
+.modal {
+  .close {
+    display: none;
+    position: absolute;
+    top: torem(20px);
+    right: torem(20px);
+    text-decoration: none;
+
+    &.close--active {
+      display: block;
     }
   }
 }
