@@ -9,7 +9,7 @@
     "postinstall": "npm run copyindex",
     "gulp": "gulp",
     "build": "npm run copyindex && npm run gulp",
-    "build-debug": "cross-env BUILD_ENV=debug gulp",
+    "build:debug": "cross-env BUILD_ENV=debug npm run gulp",
     "serve": "node server.js"
   },
   "repository": {
@@ -28,17 +28,17 @@
     "normalize.css": "^8.0.0",
     "serve-favicon": "^2.5.0",
     "zp-lib": "^0.0.7",
-    "zp-ui": "^0.3.0"
+    "zp-ui": "^0.4.0"
   },
   "devDependencies": {
-    "@babel/core": "^7.0.0-beta.44",
-    "@babel/polyfill": "^7.0.0-beta.44",
-    "@babel/preset-env": "^7.0.0-beta.44",
-    "@babel/preset-stage-0": "^7.0.0-beta.44",
-    "@babel/register": "^7.0.0-beta.44",
-    "autoprefixer": "^8.2.0",
+    "@babel/core": "7.0.0-beta.46",
+    "@babel/polyfill": "7.0.0-beta.46",
+    "@babel/preset-env": "7.0.0-beta.46",
+    "@babel/preset-stage-2": "7.0.0-beta.46",
+    "@babel/register": "7.0.0-beta.46",
+    "autoprefixer": "^8.4.0",
     "babel-loader": "^8.0.0-beta.2",
-    "browser-sync": "^2.23.6",
+    "browser-sync": "^2.23.7",
     "cross-env": "^5.1.4",
     "cssnano": "^3.10.0",
     "cz-conventional-changelog": "^2.1.0",
@@ -70,12 +70,12 @@
     "stylelint-config-sass-guidelines": "^5.0.0",
     "through2": "^2.0.3",
     "vinyl-named": "^1.1.0",
-    "webpack": "^4.5.0",
+    "webpack": "^4.6.0",
     "webpack-bundle-analyzer": "^2.11.1",
     "webpack-stream": "^4.0.3"
   },
   "engines": {
-    "node": ">=8.9.4"
+    "node": ">=8.11.1"
   },
   "config": {
     "commitizen": {
@@ -84,8 +84,9 @@
   },
   "browserslist": [
     "> 1%",
-    "last 1 version",
+    "last 2 versions",
     "Firefox ESR",
+    "chrome >= 49",
     "not ie < 11"
   ]
 }
