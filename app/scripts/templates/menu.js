@@ -17,7 +17,7 @@ const page = param => param.reduce((prev, d) => (
 page.displayName = 'page';
 
 export default templater`
-  <div class="app app--menu menu" data-group="main">
+  <div class="app app--menu menu" data-group="menu">
     ${page}
   </div>
 `;

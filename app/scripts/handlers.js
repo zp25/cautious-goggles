@@ -11,7 +11,7 @@ const createHandler = ({ imageLoader }) => {
           const errSrc = data.filter(d => d.error).map(d => d.src);
 
           if (errSrc.length > 0) {
-            console.log(`图片加载失败: ${errSrc.join(', ')}`);
+            console.log(`第二张图片将加载失败: ${errSrc.join(', ')}`);
           }
         });
       });
@@ -26,6 +26,7 @@ const createHandler = ({ imageLoader }) => {
 const createClickHandler = (components) => {
   const {
     carousel,
+    carouselRight,
     modal,
     menu,
   } = components;
@@ -33,11 +34,25 @@ const createClickHandler = (components) => {
   /**
    * 轮播自定义导航
    */
-  const customNav = (e) => {
+  const step = (e) => {
     e.preventDefault();
 
     const reverse = e.target.dataset.reverse === 'true';
     carousel.play(reverse);
+  };
+
+  const jump = (e) => {
+    e.preventDefault();
+
+    const next = Number(e.target.dataset.order);
+    carousel.play(next);
+  };
+
+  const jumpLite = (e) => {
+    e.preventDefault();
+
+    const next = Number(e.target.dataset.order);
+    carouselRight.play(next);
   };
 
   /**
@@ -87,9 +102,10 @@ const createClickHandler = (components) => {
    */
   const switchList = (e) => {
     const { page } = e.target.dataset;
+    const { page: currentPage } = menu.getState();
 
-    if (menu.page !== page) {
-      menu.open(page);
+    if (currentPage !== page) {
+      menu.update({ page });
     }
   };
 
@@ -101,7 +117,9 @@ const createClickHandler = (components) => {
   };
 
   return {
-    customNav,
+    step,
+    jump,
+    jumpLite,
     loading,
     prompt,
     switching,

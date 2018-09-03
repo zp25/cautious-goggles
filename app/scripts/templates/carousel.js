@@ -17,7 +17,7 @@ const list = (type) => {
    * @return {function}
    */
   const nav = param => param.reduce((prev, d, index) => (
-    `${prev}<a href="#slide" class="slide-nav" data-order="${index + 1}"></a>`
+    `${prev}<a href="#slide" class="jump__btn" data-trigger="jump" data-order="${index + 1}"></a>`
   ), '');
 
   return {
@@ -30,13 +30,14 @@ export default templater`
   <div class="app app--carousel">
     <div class="carousel" data-group="main">
       <div class="carousel__main">${list('main')}</div>
-      <div class="carousel__nav">${list('nav')}</div>
-    </div>
 
-    <!-- 自定义导航 -->
-    <div class="custom-nav">
-      <button class="custom-nav__btn custom-nav__btn--l" data-trigger="customNav" data-reverse="true">cL</button>
-      <button class="custom-nav__btn custom-nav__btn--r" data-trigger="customNav">cR</button>
+      <!-- 自定义导航 -->
+      <div class="step">
+        <button class="step__btn step__btn--l" data-trigger="step" data-reverse="true">cL</button>
+        <button class="step__btn step__btn--r" data-trigger="step">cR</button>
+      </div>
+
+      <div class="jump">${list('nav')}</div>
     </div>
   </div>
 `;

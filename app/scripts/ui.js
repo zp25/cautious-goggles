@@ -27,9 +27,22 @@ export default () => {
   /**
    * 轮播精简版
    */
-  const carouselLite = () => {
-    const result = Template.carouselLite({ list });
-    $('.demo--carousel-lite').insertAdjacentHTML('afterbegin', result);
+  const carouselLeft = () => {
+    const result = Template.carouselLite({
+      list,
+      group: 'left',
+      nav: false,
+    });
+    $('.demo--carousel-lite').insertAdjacentHTML('beforeend', result);
+  };
+
+  const carouselRight = () => {
+    const result = Template.carouselLite({
+      list,
+      group: 'right',
+      nav: [1, 2, 3],
+    });
+    $('.demo--carousel-lite').insertAdjacentHTML('beforeend', result);
   };
 
   const panel = () => {
@@ -102,7 +115,8 @@ export default () => {
 
   return {
     carousel,
-    carouselLite,
+    carouselLeft,
+    carouselRight,
     panel,
     menu,
     imageLoader,

@@ -1,9 +1,8 @@
 import {
   Carousel,
-  CarouselLite,
+  Group,
   ImageLoader,
   Modal,
-  Menu,
 } from 'zp-ui';
 import { dispatch } from 'zp-lib';
 
@@ -13,9 +12,11 @@ import {
 } from './handlers';
 import ui from './ui';
 import {
+  navObserver,
   backgroundObserver,
   counterObserver,
   dialogSwitchingObserver,
+  menuObserver,
 } from './observers';
 
 /**
@@ -34,18 +35,22 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // carousel
   const carousel = new Carousel('main', { focus: 2, delay: 8000 });
+  carousel.attach(navObserver.call(carousel));
   carousel.autoplay();
 
   // carousel lite
-  const carouselLite = new CarouselLite('lite', { delay: 4000 });
+  const carouselLeft = new Carousel('left', { delay: 4000 });
   const bgRecorder = backgroundObserver();
 
-  carouselLite.attach([
+  carouselLeft.attach([
     bgRecorder,
-    counterObserver(carouselLite.detach.bind(carouselLite, bgRecorder)),
+    counterObserver(carouselLeft.detach.bind(carouselLeft, bgRecorder)),
   ]);
+  carouselLeft.autoplay();
 
-  carouselLite.play();
+  const carouselRight = new Carousel('right');
+  carouselRight.attach(navObserver.call(carouselRight));
+  carouselRight.play();
 
   // image loader
   const imageLoader = new ImageLoader();
@@ -56,11 +61,17 @@ document.addEventListener('DOMContentLoaded', () => {
   modal.close();
 
   // menu
-  const menu = new Menu('main');
-  menu.open(2, true);
+  const menu = new Group('menu');
+  menu.attach(menuObserver.call(menu));
+  menu.update({ page: '2' });
 
   // event listener
-  const clickHandler = createClickHandler({ carousel, modal, menu });
+  const clickHandler = createClickHandler({
+    carousel,
+    carouselRight,
+    modal,
+    menu,
+  });
   document.body.addEventListener('click', dispatch(clickHandler), false);
 
   const handler = createHandler({ imageLoader });

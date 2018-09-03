@@ -21,10 +21,16 @@
   .demo {
     margin-bottom: torem(20px);
 
-    &.demo--carousel,
-    &.demo--carousel-lite {
+    &.demo--carousel {
       width: 100%;
       height: torem(320px);
+    }
+
+    &.demo--carousel-lite {
+      @include flexbox(row, nowrap, space-around, stretch);
+
+      width: 100%;
+      height: torem(200px);
     }
 
     &.demo--panel,
@@ -36,18 +42,14 @@
       position: relative;
       width: 85%;
       height: torem(100px);
-      transform-style: preserve-3d;
     }
   }
 }
 
 .app {
-  &.app--carousel {
+  &.app--carousel,
+  &.app--carousel-lite {
     @include flexbox(column, nowrap, flex-start, center);
-
-    position: relative;
-    width: 100%;
-    height: 100%;
 
     // 设置banner
     .slide-banner {
@@ -63,9 +65,14 @@
         background-color: var(--red);
       }
     }
+  }
 
-    .custom-nav {
-      .custom-nav__btn {
+  &.app--carousel {
+    width: 100%;
+    height: 100%;
+
+    .step {
+      .step__btn {
         position: absolute;
         top: 50%;
         width: torem(40px);
@@ -81,12 +88,46 @@
           outline: none;
         }
 
-        &.custom-nav__btn--l {
+        &.step__btn--l {
           left: torem(10px);
         }
 
-        &.custom-nav__btn--r {
+        &.step__btn--r {
           right: torem(10px);
+        }
+      }
+    }
+  }
+
+  &.app--carousel-lite {
+    flex: 0 0 48%;
+  }
+
+  &.app--carousel,
+  &.app--carousel-lite {
+    .jump {
+      @include flexbox(row, nowrap, center, center);
+
+      position: absolute;
+      left: 0;
+      bottom: 0;
+      width: 100%;
+      height: torem(42px);
+
+      .jump__btn {
+        width: torem(12px);
+        height: torem(12px);
+        background-color: var(--lightgrey, #d3d3d3);
+        border-radius: 50%;
+        margin: 0 torem(5px);
+        overflow: hidden;
+
+        &:focus {
+          outline: none;
+        }
+
+        &.jump__btn--active {
+          background-color: var(--grey, #808080);
         }
       }
     }
@@ -138,7 +179,12 @@
           background-color: var(--white, #fff);
           padding: torem(5px) torem(10px);
           margin: 0;
-          transform: translate3d(0, 0, -999px);
+        }
+
+        &:not(.menu__anchor--active) {
+          .menu__page {
+            @extend %visuallyhidden;
+          }
         }
 
         &.menu__anchor--active {
@@ -146,12 +192,7 @@
 
           .menu__item {
             background-color: var(--white, #fff);
-            border-color: var(--border);
-            border-bottom-color: transparent;
-          }
-
-          .menu__page {
-            transform: translate3d(0, 0, 0);
+            border-color: var(--border) var(--border) transparent var(--border);
           }
         }
       }
