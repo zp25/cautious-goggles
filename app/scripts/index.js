@@ -74,9 +74,11 @@ document.addEventListener('DOMContentLoaded', () => {
   });
   document.body.addEventListener('click', dispatch(clickHandler), false);
 
+  // lazy load
   const handler = createHandler({ imageLoader });
   window.addEventListener('scroll', handler.scroller, false);
   window.addEventListener('resize', handler.scroller, false);
+  window.addEventListener('orientationChange', handler.scroller, false);
 
   // carouselLite.main
 }, false);
