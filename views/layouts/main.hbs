@@ -14,33 +14,31 @@
   <link rel="apple-touch-icon" sizes="180x180" href="images/icon@iphone-plus.png">
   <!-- favicon -->
   <link rel="icon" type="image/png" sizes="192x192" href="images/favicon.png">
+  <!-- styles -->
   <!-- build:css styles/normalize.css -->
   <link rel="stylesheet" href="normalize.css/normalize.css"></script>
   <!-- endbuild -->
-  <!-- styles -->
+  {{#if inlineStyle}}
+  <link rel="stylesheet" href="styles/{{page}}.css" inline>
+  {{else}}
   <link rel="stylesheet" href="styles/{{page}}.css">
-  <!-- canonical -->
-  <link rel="canonical" href="https://ui.zp25.ninja/{{page}}.html">
+  {{/if}}
 </head>
 <body>
   {{> App}}
 
   {{> GithubCorners}}
 
-  {{#unless legacy}}
-    {{> Modal}}
-  {{/unless}}
+  {{> Modal}}
 
-  {{#if legacy}}
-  <!-- build:js scripts/jquery.min.js -->
-  <script src="jquery/dist/jquery.min.js"></script>
-  <!-- endbuild -->
-  {{/if}}
+{{#if vendor}}
+<script src="scripts/vendor.js"></script>
+{{/if}}
 
-  {{#if inlineScript}}
-  <script src="scripts/{{page}}.js" inline></script>
-  {{else}}
-  <script src="scripts/{{page}}.js"></script>
-  {{/if}}
+{{#if inlineScript}}
+<script src="scripts/bundle.{{page}}.js" inline></script>
+{{else}}
+<script src="scripts/bundle.{{page}}.js"></script>
+{{/if}}
 </body>
 </html>

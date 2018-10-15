@@ -8,13 +8,7 @@ const pages = {
     file: 'index.hbs',
     data: {
       title: 'UI',
-    },
-  },
-  legacy: {
-    file: 'legacy.hbs',
-    data: {
-      title: 'UI - legacy',
-      legacy: true,
+      vendor: true,
     },
   },
 };
