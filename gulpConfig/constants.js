@@ -1,5 +1,3 @@
-import path from 'path';
-
 const HTMLMINIFIER = {
   collapseWhitespace: true,
   collapseBooleanAttributes: true,
@@ -14,17 +12,14 @@ const HTMLMINIFIER = {
   removeStyleLinkTypeAttributes: true,
 };
 
-const CONTEXT = path.resolve(__dirname, process.env.CONTEXT || 'app');
-
 const PATHS = {
-  // manifest
   root: './',
   html: {
-    src: `${CONTEXT}/**/*.html`,
+    src: 'app/**/*.html',
     dest: 'dist',
   },
   styles: {
-    src: `${CONTEXT}/styles/**/*.{scss,css}`,
+    src: 'app/styles/**/*.{scss,css}',
     tmp: '.tmp/styles',
     dest: 'dist/styles',
     // gulp-sass includePaths
@@ -32,31 +27,44 @@ const PATHS = {
       'node_modules/normalize.css',
       'node_modules/zp-ui',
     ],
+    // gulp-clean-css
+    clean: [
+      'normalize.css',
+    ],
   },
   scripts: {
-    src: `${CONTEXT}/scripts/**/*.js`,
-    // webpack
-    context: path.resolve(CONTEXT, 'scripts'),
-    entry: {
-      index: 'index.js',
-      legacy: 'legacy.js',
+    src: 'app/scripts/**/*.js',
+    // browserify
+    entries: {
+      index: 'app/scripts/index.js',
     },
+    // concat
+    concat: [],
+    // production不使用
+    watch: [
+      'app/scripts/misc/**/*.js',
+    ],
     tmp: '.tmp/scripts',
     dest: 'dist/scripts',
   },
   images: {
-    src: `${CONTEXT}/images/**/*`,
+    src: 'app/images/**/*',
     tmp: '.tmp/images',
     dest: 'dist/images',
   },
-  copy: [`${CONTEXT}/*`, `!${CONTEXT}/*.html`],
+  templates: {
+    index: 'app/templates/index/*.hbs',
+  },
+  copy: ['app/*', '!app/*.html', '!app/templates'],
   clean: ['.tmp', 'dist/*'],
   manifest: './rev-manifest.json',
-  assets: ['.tmp', CONTEXT, 'node_modules'],
+  assets: ['.tmp', 'app', 'node_modules'],
 };
+
+const VENDOR = ['zp-lib'];
 
 export {
   HTMLMINIFIER,
-  CONTEXT,
   PATHS,
+  VENDOR,
 };

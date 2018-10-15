@@ -2,12 +2,10 @@
   "root": true,
   "env": {
     "browser": true,
-    "jquery": true,
     "es6": true
   },
   "globals": {
-    "Carousel": false,
-    "CarouselLite": false
+    "DEV": false
   },
   "rules": {
     "no-cond-assign": ["error", "except-parens"],
