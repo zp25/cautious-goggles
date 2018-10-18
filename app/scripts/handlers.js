@@ -81,7 +81,7 @@ const createClickHandler = (components) => {
    * modal dialog切换效果
    */
   const switching = () => {
-    modal.loading();
+    modal.prompt('switching');
 
     setTimeout(() => {
       message('Loading结束');

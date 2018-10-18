@@ -63,12 +63,12 @@ const counterObserver = (detach) => {
  */
 const dialogSwitchingObserver = () => ({
   update: (state) => {
-    const { hidden, panel } = state;
+    const { modal } = state;
 
     const closeBtn = document.querySelector('.modal .close');
     const activeName = 'close--active';
 
-    if (panel === 'switching' || hidden) {
+    if (modal === 'switching' || !modal) {
       closeBtn.classList.remove(activeName);
     } else {
       closeBtn.classList.add(activeName);

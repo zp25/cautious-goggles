@@ -216,6 +216,10 @@
 }
 
 .modal {
+  .modal__dialog--switching {
+    @extend .modal__dialog--loading; /* stylelint-disable-line scss/at-extend-no-missing-placeholder */
+  }
+
   .close {
     display: none;
     position: absolute;
