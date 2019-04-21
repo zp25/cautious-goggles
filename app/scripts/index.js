@@ -1,8 +1,8 @@
 import {
-  Carousel,
   Group,
   ImageLoader,
   Modal,
+  SwipeCarousel,
 } from 'zp-ui';
 import { dispatch } from 'zp-lib';
 
@@ -15,9 +15,13 @@ import {
   navObserver,
   backgroundObserver,
   counterObserver,
-  dialogSwitchingObserver,
-  menuObserver,
-} from './observers';
+} from './observers/carousel';
+import {
+  modalObserver,
+  dialogObserver,
+  closeButtonObserver,
+} from './observers/modal';
+import menuObserver from './observers/menu';
 
 /**
  * 首次呈现
@@ -34,12 +38,11 @@ document.addEventListener('DOMContentLoaded', () => {
   render();
 
   // carousel
-  const carousel = new Carousel('main', { focus: 2, delay: 8000 });
+  const carousel = new SwipeCarousel('main', { focus: 2, delay: 8000 });
   carousel.attach(navObserver.call(carousel));
   carousel.autoplay();
 
-  // carousel lite
-  const carouselLeft = new Carousel('left', { delay: 4000 });
+  const carouselLeft = new SwipeCarousel('left', { delay: 4000 });
   const bgRecorder = backgroundObserver();
 
   carouselLeft.attach([
@@ -48,22 +51,23 @@ document.addEventListener('DOMContentLoaded', () => {
   ]);
   carouselLeft.autoplay();
 
-  const carouselRight = new Carousel('right');
+  const carouselRight = new SwipeCarousel('right');
   carouselRight.attach(navObserver.call(carouselRight));
   carouselRight.play();
 
-  // image loader
-  const imageLoader = new ImageLoader();
-
   // mask
   const modal = new Modal('main');
-  modal.attach(dialogSwitchingObserver());
+  modal.attach([
+    modalObserver.call(modal),
+    dialogObserver.call(modal),
+    closeButtonObserver.call(modal),
+  ]);
   modal.close();
 
   // menu
   const menu = new Group('menu');
   menu.attach(menuObserver.call(menu));
-  menu.update({ page: '2' });
+  menu.setState({ page: '2' });
 
   // event listener
   const clickHandler = createClickHandler({
@@ -74,11 +78,10 @@ document.addEventListener('DOMContentLoaded', () => {
   });
   document.body.addEventListener('click', dispatch(clickHandler), false);
 
-  // lazy load
-  const handler = createHandler({ imageLoader });
-  window.addEventListener('scroll', handler.scroller, false);
-  window.addEventListener('resize', handler.scroller, false);
-  window.addEventListener('orientationChange', handler.scroller, false);
+  // image loader
+  const handler = createHandler({ imageLoader: new ImageLoader() });
 
-  // carouselLite.main
+  window.addEventListener('scroll', handler.lazyload, false);
+  window.addEventListener('resize', handler.lazyload, false);
+  window.addEventListener('orientationChange', handler.lazyload, false);
 }, false);

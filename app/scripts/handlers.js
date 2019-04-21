@@ -2,12 +2,12 @@ const createHandler = ({ imageLoader }) => {
   // scroller节拍器，避免频繁操作
   let timer = NaN;
 
-  const scroller = () => {
+  const lazyload = () => {
     timer = timer || setTimeout(() => {
       timer = NaN;
 
       requestAnimationFrame(() => {
-        imageLoader.lazyload().then((data) => {
+        imageLoader.load('image-loader').then((data) => {
           const errSrc = data.filter(d => d.error).map(d => d.src);
 
           if (errSrc.length > 0) {
@@ -19,7 +19,7 @@ const createHandler = ({ imageLoader }) => {
   };
 
   return {
-    scroller,
+    lazyload,
   };
 };
 
@@ -60,7 +60,11 @@ const createClickHandler = (components) => {
    * @param {string} [msg='prompt'] - 提示消息
    */
   const message = (msg) => {
-    modal.prompt('message', msg);
+    modal.prompt('message');
+
+    const { group } = modal;
+    const target = document.querySelector(`.modal[data-group='${group}'] .message`);
+    target.innerHTML = msg;
   };
 
   /**
@@ -102,10 +106,10 @@ const createClickHandler = (components) => {
    */
   const switchList = (e) => {
     const { page } = e.target.dataset;
-    const { page: currentPage } = menu.getState();
+    const { page: currentPage } = menu.state;
 
     if (currentPage !== page) {
-      menu.update({ page });
+      menu.setState({ page });
     }
   };
 
