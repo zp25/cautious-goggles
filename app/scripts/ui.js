@@ -45,15 +45,6 @@ export default () => {
     $('.demo--carousel-lite').insertAdjacentHTML('beforeend', result);
   };
 
-  const panel = () => {
-    const result = Template.panel({
-      title: 'Header',
-      body: 'Body',
-    });
-
-    $('.demo--panel').insertAdjacentHTML('afterbegin', result);
-  };
-
   const menu = () => {
     const result = Template.menu({
       page: [
@@ -117,7 +108,6 @@ export default () => {
     carousel,
     carouselLeft,
     carouselRight,
-    panel,
     menu,
     imageLoader,
   };
