@@ -26,6 +26,7 @@ const PATHS = {
     includePaths: [
       'node_modules/normalize.css',
       'node_modules/zp-ui',
+      'node_modules/spinkit',
     ],
     // gulp-clean-css
     clean: [
