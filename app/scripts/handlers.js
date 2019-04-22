@@ -11,7 +11,9 @@ const createHandler = ({ imageLoader }) => {
           const errSrc = data.filter(d => d.error).map(d => d.src);
 
           if (errSrc.length > 0) {
-            console.log(`第二张图片将加载失败: ${errSrc.join(', ')}`);
+            console.log( // eslint-disable-line no-console
+              `第二张图片将加载失败: ${errSrc.join(', ')}`,
+            );
           }
         });
       });

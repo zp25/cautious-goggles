@@ -10,7 +10,9 @@ const list = (type) => {
    * 制作banner
    * @return {function}
    */
-  const main = param => param.reduce(prev => `${prev}<div class="slide-banner"></div>`, '');
+  const main = param => param.reduce(prev => (
+    `${prev}<div class="slide-banner"></div>`
+  ), '');
 
   /**
    * 制作nav

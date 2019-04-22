@@ -8,7 +8,8 @@ const loaders = data => data.reduce((prev, d) => (`${prev}
     data-id="${d.id}"
   >
     <img src="${d.preview}" alt="${d.alt}" class="image image--thumbnail">
-    <div class="aspect-ratio-fill" style="padding-bottom: ${d.ratio * 100}%;"></div>
+    <div class="aspect-ratio-fill" style="padding-bottom: ${d.ratio * 100}%;">
+    </div>
   </div>
 `), '');
 

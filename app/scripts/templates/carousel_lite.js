@@ -4,7 +4,9 @@
 
 import { templater } from 'zp-lib';
 
-const list = param => param.reduce(prev => `${prev}<div class="slide-banner"></div>`, '');
+const list = param => param.reduce(prev => (
+  `${prev}<div class="slide-banner"></div>`
+), '');
 
 list.displayName = 'list';
 

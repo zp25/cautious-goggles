@@ -13,8 +13,9 @@ function navObserver() {
      */
     update: (state) => {
       const { focus } = state;
+      const ctrlBtns = this.carousel.querySelectorAll('.jump__btn');
 
-      Array.from(this.carousel.querySelectorAll('.jump__btn')).forEach((btn) => {
+      Array.from(ctrlBtns).forEach((btn) => {
         const order = Number(btn.dataset.order);
 
         if (order === focus) {
@@ -35,7 +36,7 @@ const backgroundObserver = () => ({
     const color = ['blue', 'green', 'red'];
     const { focus } = state;
 
-    console.log(
+    console.log( // eslint-disable-line no-console
       `carouselLeft background color: %c${color[focus - 1]}`,
       `color: ${color[focus - 1]};`,
     );
@@ -55,7 +56,9 @@ const counterObserver = (detach) => {
       if (count === 6) {
         const num = detach();
 
-        console.log(`卸载backgroundObserver, 剩余observer数量: ${num}`);
+        console.log( // eslint-disable-line no-console
+          `卸载backgroundObserver, 剩余observer数量: ${num}`,
+        );
       }
     },
   };

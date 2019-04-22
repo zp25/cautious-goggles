@@ -4,7 +4,9 @@
 
 import { templater } from 'zp-lib';
 
-const list = param => param.reduce((prev, d) => `${prev}<li>${d.content}</li>`, '');
+const list = param => param.reduce((prev, d) => (
+  `${prev}<li>${d.content}</li>`
+), '');
 
 const page = param => param.reduce((prev, d) => (
   `${prev}<a class="menu__anchor" data-trigger="switchList" data-page="${d.id}">

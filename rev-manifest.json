@@ -1,5 +1,5 @@
 {
-  "bundle.index.js": "bundle-f77389da20.index.js",
-  "index.css": "index-0b39ae04ad.css",
-  "vendor.js": "vendor-cf782cb6f4.js"
+  "scripts/bundle.index.js": "scripts/bundle-e0c0384387.index.js",
+  "scripts/vendor.js": "scripts/vendor-cf782cb6f4.js",
+  "styles/index.css": "styles/index-0b39ae04ad.css"
 }
