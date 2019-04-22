@@ -61,14 +61,17 @@ app.use(compression());
 
 // static assets
 FAVICON.forEach((icon) => {
-  app.use(`/images/${icon}`, express.static(path.resolve(static, 'images', icon), { maxAge: ms('0.5y') }));
+  app.use(`/${icon}`, express.static(path.resolve(static, icon), {
+    maxAge: ms('0.5y'),
+  }));
 });
 
-app.use('/images', express.static(images, { maxAge: ms('1w') }));
+app.use('/images', express.static(images, { maxAge: ms('0.5y') }));
 app.use('/scripts', express.static(scripts, { maxAge: ms('0.5y') }));
 app.use('/styles', express.static(styles, { maxAge: ms('0.5y') }));
 app.use(express.static(static, {
   setHeaders: (res) => {
+    // 其他静态资源no-cache
     res.set('Cache-Control', 'no-cache');
   },
 }));
