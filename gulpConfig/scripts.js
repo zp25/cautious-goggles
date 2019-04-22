@@ -1,3 +1,6 @@
+/* eslint import/no-extraneous-dependencies: ["error", { "peerDependencies": true }] */
+
+import path from 'path';
 import gulp from 'gulp';
 import gulpLoadPlugins from 'gulp-load-plugins';
 import log from 'fancy-log';
@@ -6,138 +9,170 @@ import watchify from 'watchify';
 import babelify from 'babelify';
 import source from 'vinyl-source-stream';
 import buffer from 'vinyl-buffer';
-import es from 'event-stream';
+import merge from 'merge-stream';
 import {
-  PATHS,
-  VENDOR,
+  SRC,
+  OUTPUT,
+  TEMP,
 } from './constants';
 
 const $ = gulpLoadPlugins();
 const pwd = process.cwd();
 
-const {
-  root: rootPath,
-  scripts: {
-    src: srcPath,
-    entries: entriesPath,
-    concat: files,
-    tmp: tmpPath,
-    dest: destPath,
-  },
-  manifest: manifestPath,
-} = PATHS;
+const getKey = filename => path.basename(filename, path.extname(filename));
 
 // Lint
-const lint = BS => () => gulp.src(srcPath)
-  .pipe($.eslint())
-  .pipe($.eslint.format())
-  .pipe($.if(!BS.active, $.eslint.failOnError()));
+function lint(BS) {
+  const task = () => gulp.src(path.join(SRC, '**/*.js'))
+    .pipe($.eslint())
+    .pipe($.eslint.format())
+    .pipe($.if(!BS.active, $.eslint.failOnError()));
 
-// Concat
-const tmpConcat = BS => (done) => {
-  if (files.length === 0) {
-    done();
-    return;
-  }
+  task.displayName = 'lint';
 
-  return gulp.src(files)
-    .pipe($.newer(tmpPath))
-    .pipe($.sourcemaps.init())
-      .pipe($.babel())
-    .pipe($.sourcemaps.write())
-    .pipe(gulp.dest(tmpPath))
-    .pipe(BS.stream({ once: true }));
+  return task;
 }
 
-function concat(done) {
-  if (files.length === 0) {
+// Concat
+const tmpConcat = BS => src => () => (
+  gulp.src(src, { base: SRC })
+    .pipe($.newer(TEMP))
+    .pipe($.sourcemaps.init())
+    // sourcemap start
+    .pipe($.babel())
+    // sourcemap end
+    .pipe($.sourcemaps.write())
+    .pipe(gulp.dest(TEMP))
+    .pipe(BS.stream({ once: true }))
+);
+
+const tmpConcatBatch = BS => files => (done) => {
+  const tasks = Object.values(files).map(src => (
+    tmpConcat(BS)(src)()
+  ));
+
+  const streams = merge(...tasks);
+
+  if (streams.isEmpty) {
     done();
-    return;
+    return undefined;
   }
 
-  return gulp.src(files)
-    .pipe($.sourcemaps.init())
+  return streams;
+};
+
+/**
+ * 合并任务
+ * @param {Array.<string>} src - 资源
+ * @param {string} filename - 输出文件名
+ */
+function concat(src, filename) {
+  const key = getKey(filename);
+
+  const task = () => (
+    gulp.src(src)
+      .pipe($.sourcemaps.init())
+      // sourcemap start
       .pipe($.babel())
       .pipe($.concat({
-        path: 'concat.js',
-        cwd: '',
+        path: filename,
       }))
       .pipe($.uglify({
         // preserveComments: 'license',
         compress: {
           global_defs: {
-            'DEV': false,
+            DEV: false,
           },
         },
       }))
-      .pipe($.size({ title: 'concat' }))
+      .pipe($.size({ title: `concat:${key}` }))
       .pipe($.rev())
-    .pipe($.sourcemaps.write('.'))
-    .pipe(gulp.dest(destPath))
-    .pipe($.rev.manifest({
-      base: process.cwd(),
-      merge: true,
-    }))
-    .pipe(gulp.dest(rootPath));
+      // sourcemap end
+      .pipe($.sourcemaps.write('.'))
+      .pipe(gulp.dest(OUTPUT))
+      .pipe($.rev.manifest({
+        base: pwd,
+        merge: true,
+      }))
+      .pipe(gulp.dest(pwd))
+  );
+
+  task.displayName = `concat:${key}`;
+
+  return task;
 }
 
 // Bundle
-const development = entry => b => BS => b.bundle()
+const development = b => filename => b.bundle()
   .on('error', log.bind(log, 'Browserify Error'))
-  .pipe(source(`bundle.${entry}.js`))
-  .pipe(gulp.dest(tmpPath))
-  .pipe(BS.stream({ once: true }));
+  .pipe(source(filename))
+  .pipe(gulp.dest(TEMP));
 
-const production = entry => b => b.bundle()
-  .on('error', log.bind(log, 'Browserify Error'))
-  .pipe(source(`bundle.${entry}.js`))
-  .pipe(buffer())
-  .pipe($.sourcemaps.init({ loadMaps: true }))
-    .pipe($.uglify({
-      // preserveComments: 'license',
-      compress: {
-        global_defs: {
-          'DEV': false,
-        },
-      },
-    }))
-    .pipe($.size({ title: 'scripts', showFiles: true }))
-    .pipe($.rev())
-  .pipe($.sourcemaps.write('.'))
-  .pipe(gulp.dest(destPath));
+const tmpBundle = BS => (entry, filename, opts = {}) => () => {
+  const {
+    exclude = [],
+  } = opts;
 
-const tmpBundle = BS => (done) => {
-  const tasks = Object.keys(entriesPath).map((entry) => {
-    const b = browserify({
-      entries: entriesPath[entry],
-      cache: {},
-      packageCache: {},
-      transform: [babelify],
-      plugin: [watchify],
-      // apply source maps
-      debug: true,
-    });
-
-    // exclude vendor
-    VENDOR.forEach((lib) => {
-      b.exclude(lib);
-    });
-
-    // 只有执行bundle()后watchify才能监听update事件
-    b.on('update', () => development(entry)(b)(BS));
-    // watchify监听log事件，输出内容X bytes written (Y seconds)，fancy-log添加时间
-    b.on('log', log);
-
-    return development(entry)(b)(BS);
+  const b = browserify({
+    entries: entry,
+    cache: {},
+    packageCache: {},
+    transform: [babelify],
+    plugin: [watchify],
+    // apply source maps
+    debug: true,
   });
 
-  es.merge(tasks).on('end', done);
+  // exclude vendor
+  (Array.isArray(exclude) ? exclude : [exclude]).forEach((lib) => {
+    b.exclude(lib);
+  });
+
+  // 只有执行bundle()后watchify才能监听update事件
+  b.on('update', () => (
+    development(b)(filename).pipe(BS.stream({ once: true }))
+  ));
+  // watchify监听log事件，输出内容X bytes written (Y seconds)，fancy-log添加时间
+  b.on('log', log);
+
+  return development(b)(filename);
 };
 
-function bundle(done) {
-  const tasks = Object.keys(entriesPath).map((entry) => {
+const tmpBundleBatch = BS => (entries, filename, opts = {}) => (done) => {
+  const tmp = 'scripts/bundle.[name].js';
+
+  let fname = filename || tmp;
+  let { exclude = [] } = opts;
+
+  if (typeof filename === 'object') {
+    fname = tmp;
+    exclude = filename.exclude || [];
+  }
+
+  const tasks = Object.entries(entries).map(([key, entry]) => (
+    tmpBundle(BS)(entry, fname.replace('[name]', key), { exclude })()
+  ));
+
+  const streams = merge(...tasks);
+
+  if (streams.isEmpty) {
+    done();
+    return undefined;
+  }
+
+  return streams;
+};
+
+function bundle(entry, filename, opts = {}) {
+  const {
+    exclude = [],
+  } = opts;
+
+  const key = getKey(filename);
+
+  const task = () => {
     const b = browserify({
-      entries: entriesPath[entry],
+      entries: entry,
       cache: {},
       packageCache: {},
       transform: [babelify],
@@ -146,28 +181,45 @@ function bundle(done) {
     });
 
     // exclude vendor
-    VENDOR.forEach((lib) => {
+    (Array.isArray(exclude) ? exclude : [exclude]).forEach((lib) => {
       b.exclude(lib);
     });
 
-    return production(entry)(b);
-  });
+    return b.bundle()
+      .on('error', log.bind(log, 'Browserify Error'))
+      .pipe(source(filename))
+      .pipe(buffer())
+      .pipe($.sourcemaps.init({ loadMaps: true }))
+      // sourcemap start
+      .pipe($.uglify({
+        // preserveComments: 'license',
+        compress: {
+          global_defs: {
+            DEV: false,
+          },
+        },
+      }))
+      .pipe($.size({ title: `bundle:${key}` }))
+      .pipe($.rev())
+      // sourcemap end
+      .pipe($.sourcemaps.write('.'))
+      .pipe(gulp.dest(OUTPUT))
+      .pipe($.rev.manifest({
+        base: pwd,
+        merge: true,
+      }))
+      .pipe(gulp.dest(pwd));
+  };
 
-  const manifest = gulp.src(manifestPath);
+  task.displayName = `bundle:${key}`;
 
-  es.merge(tasks.concat(manifest))
-    .pipe($.rev.manifest({
-      base: pwd,
-      merge: true,
-    }))
-    .pipe(gulp.dest(rootPath))
-    .on('end', done);
+  return task;
 }
 
-function vendor(done) {
-  if (!VENDOR || VENDOR.length === 0) {
+const vendor = (libs = [], filename = 'scripts/vendor.js') => (done) => {
+  if (!Array.isArray(libs) || libs.length === 0) {
     done();
-    return;
+    return undefined;
   }
 
   const b = browserify({
@@ -178,34 +230,38 @@ function vendor(done) {
     debug: true,
   });
 
-  VENDOR.forEach((lib) => {
+  libs.forEach((lib) => {
     b.require(lib);
   });
 
   return b.bundle()
     .on('error', log.bind(log, 'Browserify Error'))
-    .pipe(source('vendor.js'))
+    .pipe(source(filename))
     .pipe(buffer())
     .pipe($.sourcemaps.init({ loadMaps: true }))
-      .pipe($.sourcemaps.write())
-      .pipe(gulp.dest(tmpPath))
-      .pipe($.uglify())
-      .pipe($.size({ title: 'vendor' }))
-      .pipe($.rev())
+    // sourcemap start
+    .pipe($.sourcemaps.write())
+    .pipe(gulp.dest(TEMP))
+    .pipe($.uglify())
+    .pipe($.size({ title: 'vendor' }))
+    .pipe($.rev())
+    // sourcemap end
     .pipe($.sourcemaps.write('.'))
-    .pipe(gulp.dest(destPath))
+    .pipe(gulp.dest(OUTPUT))
     .pipe($.rev.manifest({
       base: pwd,
       merge: true,
     }))
-    .pipe(gulp.dest(rootPath));
-}
+    .pipe(gulp.dest(pwd));
+};
 
 export {
   lint,
   tmpConcat,
+  tmpConcatBatch,
   concat,
   tmpBundle,
+  tmpBundleBatch,
   bundle,
   vendor,
 };

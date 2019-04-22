@@ -1,11 +1,11 @@
 # zp-ui
 
-[![Build Status](https://travis-ci.org/zp25/zp-ui.svg?branch=example)](https://travis-ci.org/zp25/zp-ui)
+[![Build Status](https://travis-ci.org/zp25/zp-ui-example.svg?branch=master)](https://travis-ci.org/zp25/zp-ui-example)
 
 zp-ui示例
 
 ~~~bash
-yarn
+npm install
 npm start
 ~~~
 开发
