@@ -71,7 +71,7 @@
     animation: dialogFadeIn 140ms ease-in-out;
 
     .message {
-      font-size: fontSize(bold);
+      font-size: torem(16px);
       text-align: center;
       margin: 0;
       animation: contentFadeIn 170ms ease-in-out;
