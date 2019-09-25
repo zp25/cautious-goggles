@@ -8,6 +8,7 @@
     "DEV": false
   },
   "rules": {
+    "arrow-parens": ["error", "as-needed", { "requireForBlockBody": true }],
     "no-cond-assign": ["error", "except-parens"],
     "no-param-reassign": [
       "error", { "props": false }
