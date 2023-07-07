@@ -86,7 +86,7 @@
     "npm-check": "^5.9.0",
     "rimraf": "^3.0.0",
     "shortid": "^2.2.15",
-    "stylelint": "^12.0.1",
+    "stylelint": "^15.10.1",
     "stylelint-config-sass-guidelines": "^6.2.0",
     "vinyl-buffer": "^1.0.1",
     "vinyl-source-stream": "^2.0.0",
